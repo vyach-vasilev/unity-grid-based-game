@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be1ae6a934f4e8aac5c89e48e44bf6a, type: 3}
-  m_Name: GridFeature
+  m_Name: Map Feature
   m_EditorClassIdentifier: 
   m_Active: 1
   _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
@@ -20,6 +20,23 @@ MonoBehaviour:
     type: 3}
   _selectionMaterial: {fileID: 2100000, guid: 099c9420e34e1a24e9705d7ae1085017, type: 2}
   _waypointMaterial: {fileID: 2100000, guid: 391246039689ebe48b9c6b6a7d03defa, type: 2}
+  _renderPassEvent: 300
+--- !u!114 &-4081125951977276772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad27b10f8c3480594be09fa884a6096, type: 3}
+  m_Name: GridFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _gridMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  _gridMaterial: {fileID: 2100000, guid: 09030e243e956d849b701ee5d3c25a1c, type: 2}
   _renderPassEvent: 300
 --- !u!114 &11400000
 MonoBehaviour:
@@ -38,7 +55,8 @@ MonoBehaviour:
       type: 3}
   m_RendererFeatures:
   - {fileID: -4735548372887847348}
-  m_RendererFeatureMap: 4c3e5749d8f347be
+  - {fileID: -4081125951977276772}
+  m_RendererFeatureMap: 4c3e5749d8f347be9c3ac4c491ed5cc7
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

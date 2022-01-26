@@ -714,6 +714,7 @@ MonoBehaviour:
     m_Bits: 64
   _nodeRadius: 0.5
   _mapSize: {x: 10, y: 10}
+  _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

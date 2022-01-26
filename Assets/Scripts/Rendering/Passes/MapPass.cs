@@ -4,7 +4,8 @@ using UnityEngine.Rendering.Universal;
 
 public class MapPass: ScriptableRenderPass
 {
-    private readonly string _profilerTag = "NodeMap";
+    private readonly string _profilerTag = "NodeMap Feature";
+    
     private readonly Material _waypointMaterial;
     private readonly Material _selectionMaterial;
     private readonly Mesh _selectionMesh;
@@ -30,6 +31,7 @@ public class MapPass: ScriptableRenderPass
         context.ExecuteCommandBuffer(buffer);
         CommandBufferPool.Release(buffer);    
     }
+    
     private void DrawHoverNode(CommandBuffer buffer)
     {
         var position = InputManager.Instance.GetWorldNodePosition();

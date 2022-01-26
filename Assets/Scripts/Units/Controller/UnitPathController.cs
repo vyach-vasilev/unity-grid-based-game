@@ -66,7 +66,7 @@ public class UnitPathController
     private async void FollowPath()
     {
         _inputManager.IsMoveLocked = false;
-        Vector3 currentWaypoint = _path[0];
+        var currentWaypoint = _path[0];
         while (true)
         {
             if (!_transform)
@@ -83,7 +83,8 @@ public class UnitPathController
                 }
                 currentWaypoint = _path[_targetIndex];
             }
-
+            
+            currentWaypoint.y = _transform.position.y;
             var targetDir = currentWaypoint - _transform.position;
             var step = _speed * Time.deltaTime;
             var newDir = Vector3.RotateTowards(_transform.forward, targetDir, step, 0.0f);

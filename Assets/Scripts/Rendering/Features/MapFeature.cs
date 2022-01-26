@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 public class MapFeature: ScriptableRendererFeature
 {
     private MapPass _pass;
-
+    
     [SerializeField] private DataTransmitter _dataTransmitter;
     [SerializeField] private Mesh _pathMesh;
     [SerializeField] private Mesh _selectionMesh;
@@ -14,7 +14,7 @@ public class MapFeature: ScriptableRendererFeature
     
     public override void Create()
     {
-        _pass = new MapPass(_waypointMaterial,_selectionMaterial, _selectionMesh, _pathMesh, _dataTransmitter);
+        _pass = new MapPass(_waypointMaterial, _selectionMaterial, _selectionMesh, _pathMesh, _dataTransmitter);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
