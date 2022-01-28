@@ -71,4 +71,12 @@ public class InputManager
 
         return Vector3.down;
     }
+    
+    public Quaternion RotateOnMouseDirection(UnitController entity)
+    {
+        var mousePosition = Camera.main.WorldToScreenPoint(entity.transform.position);
+        mousePosition = Input.mousePosition - mousePosition;
+        var angle = Mathf.Atan2(mousePosition.y, -mousePosition.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle - 120, Vector3.up);
+    }
 }

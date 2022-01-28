@@ -1,22 +1,17 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class UnitView: MonoBehaviour, IUnitView
 {
     private bool _selected;
     private Renderer _renderer;
-    private Color _defaultColor;
     
     public event EventHandler<UnitSelectEvent> OnSelect = (_, _) => {};
     public event EventHandler<UnitSelectEvent> OnDeselect = (_, _) => {};
-
-    public Color DefaultColor => _defaultColor;
     
     private void Awake()
     {
-        _renderer = GetComponent<Renderer>();
-        _defaultColor = _renderer.material.color;
+        _renderer = GetComponentInChildren<Renderer>();
     }
 
     public Vector3 Position
@@ -47,16 +42,11 @@ public class UnitView: MonoBehaviour, IUnitView
     {
         if (emission)
         {
-            _renderer.material.EnableKeyword("_EMISSION");
+            _renderer.sharedMaterial.EnableKeyword("_EMISSION");
         }
         else
         {
-            _renderer.material.DisableKeyword("_EMISSION");
+            _renderer.sharedMaterial.DisableKeyword("_EMISSION");
         }
-    }
-    
-    public void ChangeColor(Color color)
-    {
-        _renderer.material.color = color;
     }
 }

@@ -60,7 +60,7 @@ public class PathPass : ScriptableRenderPass
             return;
         }
         
-        var path = pathController.Path;
+        var path = pathController.WaypointsPath;
         var nodePosition = InputManager.Instance.GetWorldNodePosition();
 
         if (path == null || path.Count <= 0 || nodePosition == Vector3.down) return;
@@ -83,7 +83,9 @@ public class PathPass : ScriptableRenderPass
         var unitView = (UnitView)_dataTransmitter.SelectedUnitView;
         if (unitView == null || !unitView.Selected) return false;
 
-        pathController = unitView.GetComponent<UnitController>().PathController;
+        var unitController = unitView.GetComponent<UnitController>();
+        if (unitController.InAttack) return false;
+        pathController = unitController.PathController;
         return true;
     }
 }

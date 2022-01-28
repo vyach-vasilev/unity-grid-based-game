@@ -9,11 +9,17 @@ public class UnitController : MonoBehaviour, IUnitController
     private UnitPathController _pathController;
     private UnitSelectionController _selectionController;
     private DataTransmitter _dataTransmitter;
-    
+    private FSMController _fsmController;
+
     [SerializeField, Range(1, 20)] private float _movementSpeed = 10;
 
+    public Animator Animator => GetComponentInChildren<Animator>();
     public UnitView View => (UnitView)_view;
     public UnitPathController PathController => _pathController;
+
+    public bool InMove => _pathController.IsMoving;
+    public bool CanAttack => Input.GetKeyDown(KeyCode.Space);
+    public bool InAttack { get; set; }
     
     public void Initialize(IUnitModel model, IUnitView view)
     {
@@ -22,8 +28,9 @@ public class UnitController : MonoBehaviour, IUnitController
 
         _inputManager = InputManager.Instance;
         
-        _pathController = new UnitPathController(_inputManager, _view, transform);
+        _pathController = new UnitPathController(this, _inputManager, transform);
         _selectionController = new UnitSelectionController(_inputManager, _view);
+        _fsmController = new FSMController(this);
         
         _view.Position = _model.Position;
     }
@@ -56,18 +63,18 @@ public class UnitController : MonoBehaviour, IUnitController
     private void Update()
     {
         _selectionController.Update();
+
+        if (!_view.Selected) return;
         
-        if (_view.Selected)
-        {
-            _inputManager.GetDestinationPosition();
-        }
+        _inputManager.GetDestinationPosition();
+        _fsmController.Update();
     }
     
-    private void OnMoved(Vector3 targetPosition)
+    private void OnMoved(Vector3 destination)
     {
-        var selectedView = _dataTransmitter.SelectedUnitView;
+        var selectedView = (UnitView)_dataTransmitter.SelectedUnitView;
         _pathController.Update(selectedView, _movementSpeed);
-        _pathController.OnMoved(targetPosition);
+        _pathController.OnMoved(destination);
     }
     
     private void OnDestroy()

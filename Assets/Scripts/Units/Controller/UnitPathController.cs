@@ -6,37 +6,45 @@ public class UnitPathController
 {
     private readonly InputManager _inputManager;
     private readonly Transform _transform;
-    private readonly IUnitView _view;
     private readonly List<Vector3> _retracedPath = new();
-    
-    private IUnitView _selectedView;
+
+    private UnitController _unitController;
+    private UnitView _selectedView;
     private int _targetIndex;
     private List<Vector3> _path;
     
     private float _speed;
     private bool _isMoving;
 
-    public List<Vector3> Path => RetracedPath();
+    public List<Vector3> Path => _path;
+    public List<Vector3> WaypointsPath => RetracedPath();
     public List<Vector3> AvailablePath => GetAvailablePath();
+    public bool IsMoving => _isMoving;
     
-    public UnitPathController(InputManager inputManager, IUnitView view, Transform transform)
+    public UnitPathController(UnitController unitController, InputManager inputManager, Transform transform)
     {
+        _unitController = unitController;
         _inputManager = inputManager;
-        _view = view;
         _transform = transform;
     }
 
-    public void Update(IUnitView selectedView, float speed)
+    public void Update(UnitView selectedView, float speed)
     {
         _selectedView = selectedView;
         _speed = speed;
     }
     
-    public void OnMoved(Vector3 targetPosition)
+    public void OnMoved(Vector3 destination)
     {
-        if (_view == _selectedView && _view.Selected && !_isMoving)
+        var canMove = 
+            _unitController.View == _selectedView && 
+            _unitController.View.Selected && 
+            !_isMoving &&
+            !_unitController.InAttack;
+        
+        if (canMove)
         {
-            PathRequestManager.RequestPath(_transform.position, targetPosition, OnPathFound);
+            PathRequestManager.RequestPath(_transform.position, destination, OnPathFound);
         }
     }
     
@@ -49,7 +57,7 @@ public class UnitPathController
             _retracedPath.AddRange(newPath);
             _targetIndex = 0;
 
-            if (!_view.Selected)
+            if (!_unitController.View.Selected)
             {
                 _path.Clear();
                 return;
@@ -101,9 +109,7 @@ public class UnitPathController
     {
         for (int i = 0; i < _retracedPath.Count; i++)
         {
-            var retracedPath = _retracedPath[i];
-            retracedPath.y = _view.Position.y;
-            if (_view.Position == retracedPath)
+            if (_unitController.View.Position.XZ() == _retracedPath[i].XZ())
             {
                 _retracedPath.RemoveAt(i);
                 break;
