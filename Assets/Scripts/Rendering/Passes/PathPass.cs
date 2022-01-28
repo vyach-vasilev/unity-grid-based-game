@@ -2,10 +2,10 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class PathPass: ScriptableRenderPass
+public class PathPass : ScriptableRenderPass
 {
     private readonly string _profilerTag = "Path Feature";
-    
+
     private readonly Material _waypointMaterial;
     private readonly Material _selectionMaterial;
     private readonly Mesh _pathMesh;
@@ -20,6 +20,7 @@ public class PathPass: ScriptableRenderPass
         _offsetY = offsetY;
         _dataTransmitter = dataTransmitter;
     }
+
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         var buffer = CommandBufferPool.Get(_profilerTag);
@@ -28,15 +29,21 @@ public class PathPass: ScriptableRenderPass
             DrawHoverNode(buffer);
             DrawPath(buffer);
         }
+
         context.ExecuteCommandBuffer(buffer);
-        CommandBufferPool.Release(buffer);    
+        CommandBufferPool.Release(buffer);
     }
 
     private void DrawAvailableNodes(CommandBuffer buffer)
     {
-        
+        if (!TryGetUnitController(out var pathController))
+        {
+            return;
+        }
+
+        var path = pathController.AvailablePath;
     }
-    
+
     private void DrawHoverNode(CommandBuffer buffer)
     {
         var position = InputManager.Instance.GetWorldNodePosition();
@@ -45,30 +52,19 @@ public class PathPass: ScriptableRenderPass
         var matrix = Matrix4x4.Translate(position);
         buffer.DrawMesh(_pathMesh, matrix, _selectionMaterial, 0, 0);
     }
+
     private void DrawPath(CommandBuffer buffer)
     {
-        if (_dataTransmitter.SelectedUnitView == null)
-        {
-            return;
-        }
-        var unitView = (UnitView)_dataTransmitter.SelectedUnitView;
-
-        if (unitView == null || !unitView.Selected)
+        if (!TryGetUnitController(out var pathController))
         {
             return;
         }
         
-        var unitController = unitView.GetComponent<UnitController>();
-        var pathController = unitController.PathController;
         var path = pathController.Path;
-        
         var nodePosition = InputManager.Instance.GetWorldNodePosition();
-        
-        if (path == null || path.Count <= 0 || nodePosition == Vector3.down)
-        {
-            return;
-        }
-        
+
+        if (path == null || path.Count <= 0 || nodePosition == Vector3.down) return;
+
         for (var i = 0; i < path.Count - 1; i++)
         {
             var waypoint = path[i];
@@ -76,5 +72,18 @@ public class PathPass: ScriptableRenderPass
             var matrix = Matrix4x4.Translate(waypoint);
             buffer.DrawMesh(_pathMesh, matrix, _waypointMaterial, 0, 0);
         }
+    }
+
+    private bool TryGetUnitController(out UnitPathController pathController)
+    {
+        // TODO: подумать как отрефакторить. Надо получать pathController без всех этих усложнений и get component.
+        pathController = null;
+        if (_dataTransmitter.SelectedUnitView == null) return false;
+
+        var unitView = (UnitView)_dataTransmitter.SelectedUnitView;
+        if (unitView == null || !unitView.Selected) return false;
+
+        pathController = unitView.GetComponent<UnitController>().PathController;
+        return true;
     }
 }
