@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -18,6 +17,7 @@ public class UnitPathController
     private bool _isMoving;
 
     public List<Vector3> Path => RetracedPath();
+    public List<Vector3> AvailablePath => GetAvailablePath();
     
     public UnitPathController(InputManager inputManager, IUnitView view, Transform transform)
     {
@@ -34,7 +34,7 @@ public class UnitPathController
     
     public void OnMoved(Vector3 targetPosition)
     {
-        if ((_view == _selectedView) && _view.Selected && !_isMoving)
+        if (_view == _selectedView && _view.Selected && !_isMoving)
         {
             PathRequestManager.RequestPath(_transform.position, targetPosition, OnPathFound);
         }
@@ -101,7 +101,9 @@ public class UnitPathController
     {
         for (int i = 0; i < _retracedPath.Count; i++)
         {
-            if (_view.Position == _retracedPath[i])
+            var retracedPath = _retracedPath[i];
+            retracedPath.y = _view.Position.y;
+            if (_view.Position == retracedPath)
             {
                 _retracedPath.RemoveAt(i);
                 break;
@@ -110,4 +112,12 @@ public class UnitPathController
        
         return _retracedPath;
     }
+    
+    private List<Vector3> GetAvailablePath()
+    {
+        var list = new List<Vector3>();
+        list.Add(_path[0]);
+        return list;
+    }
+
 }

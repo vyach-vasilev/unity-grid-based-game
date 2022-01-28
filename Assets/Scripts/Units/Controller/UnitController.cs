@@ -12,6 +12,7 @@ public class UnitController : MonoBehaviour, IUnitController
     
     [SerializeField, Range(1, 20)] private float _movementSpeed = 10;
 
+    public UnitView View => (UnitView)_view;
     public UnitPathController PathController => _pathController;
     
     public void Initialize(IUnitModel model, IUnitView view)
@@ -64,7 +65,7 @@ public class UnitController : MonoBehaviour, IUnitController
     
     private void OnMoved(Vector3 targetPosition)
     {
-        var selectedView = _dataTransmitter.SelectedUnit;
+        var selectedView = _dataTransmitter.SelectedUnitView;
         _pathController.Update(selectedView, _movementSpeed);
         _pathController.OnMoved(targetPosition);
     }

@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class MapFeature: ScriptableRendererFeature
+public class PathFeature: ScriptableRendererFeature
 {
-    private MapPass _pass;
+    private PathPass _pass;
     
     [SerializeField] private DataTransmitter _dataTransmitter;
+    [SerializeField, Min(0.01f)] private float _offsetY = 0.01f;
     [SerializeField] private Mesh _pathMesh;
-    [SerializeField] private Mesh _selectionMesh;
     [SerializeField] private Material _selectionMaterial;
     [SerializeField] private Material _waypointMaterial;
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     
     public override void Create()
     {
-        _pass = new MapPass(_waypointMaterial, _selectionMaterial, _selectionMesh, _pathMesh, _dataTransmitter);
+        _pass = new PathPass(_waypointMaterial, _selectionMaterial, _pathMesh, _offsetY, _dataTransmitter);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -31,7 +31,7 @@ public class MapFeature: ScriptableRendererFeature
     {
         return
             _selectionMaterial && _waypointMaterial &&
-            _pathMesh != null && _selectionMesh &&
+            _pathMesh != null &&
             _dataTransmitter != null &&
             InputManager.Instance != null;
     }

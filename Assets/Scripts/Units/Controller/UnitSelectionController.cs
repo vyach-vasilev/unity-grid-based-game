@@ -45,29 +45,29 @@ public class UnitSelectionController
     
     public void OnDeselect(object sender, UnitSelectEvent e)
     {
-        if (_view != sender || _data.SelectedUnit != _view)
+        if (_view != sender || _data.SelectedUnitView != _view)
         {
             return;
         }
         View.SetEmission(false);
-        _data.SelectedUnit = null;
+        _data.SelectedUnitView = null;
     }
 
     public void OnSelect(object sender, UnitSelectEvent e)
     {
-        if (_view != sender || _data.SelectedUnit == _view)
+        if (_view != sender || _data.SelectedUnitView == _view)
         {
             return;
         }
         View.SetEmission(true);
-        _data.SelectedUnit = _view;
+        _data.SelectedUnitView = _view;
     }
     
     private void TryDeselect()
     {
-        if (_view.Selected || _data.SelectedUnit != null)
+        if (_view.Selected || _data.SelectedUnitView != null)
         {
-            _data.SelectedUnit.Selected = false;
+            _data.SelectedUnitView.Selected = false;
             _view.Selected = false;
             _inputManager.IsMoveLocked = false;
         }

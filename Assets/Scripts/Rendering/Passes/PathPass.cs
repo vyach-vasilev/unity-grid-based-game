@@ -2,22 +2,22 @@
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class MapPass: ScriptableRenderPass
+public class PathPass: ScriptableRenderPass
 {
-    private readonly string _profilerTag = "NodeMap Feature";
+    private readonly string _profilerTag = "Path Feature";
     
     private readonly Material _waypointMaterial;
     private readonly Material _selectionMaterial;
-    private readonly Mesh _selectionMesh;
     private readonly Mesh _pathMesh;
+    private readonly float _offsetY;
     private readonly DataTransmitter _dataTransmitter;
     
-    public MapPass(Material waypointMaterial, Material selectionMaterial, Mesh selectionMesh, Mesh pathMesh, DataTransmitter dataTransmitter)
+    public PathPass(Material waypointMaterial, Material selectionMaterial, Mesh pathMesh, float offsetY, DataTransmitter dataTransmitter)
     {
         _waypointMaterial = waypointMaterial;
         _selectionMaterial = selectionMaterial;
-        _selectionMesh = selectionMesh;
         _pathMesh = pathMesh;
+        _offsetY = offsetY;
         _dataTransmitter = dataTransmitter;
     }
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -31,35 +31,34 @@ public class MapPass: ScriptableRenderPass
         context.ExecuteCommandBuffer(buffer);
         CommandBufferPool.Release(buffer);    
     }
+
+    private void DrawAvailableNodes(CommandBuffer buffer)
+    {
+        
+    }
     
     private void DrawHoverNode(CommandBuffer buffer)
     {
         var position = InputManager.Instance.GetWorldNodePosition();
         if (position == Vector3.down) return;
-        position.y = 0.01f;
+        position.y = _offsetY;
         var matrix = Matrix4x4.Translate(position);
-        buffer.DrawMesh(_selectionMesh, matrix, _selectionMaterial, 0, 0);
+        buffer.DrawMesh(_pathMesh, matrix, _selectionMaterial, 0, 0);
     }
     private void DrawPath(CommandBuffer buffer)
     {
-        if (_dataTransmitter.SelectedUnit == null || !_dataTransmitter.SelectedUnit.Selected)
+        if (_dataTransmitter.SelectedUnitView == null)
         {
             return;
         }
-        var selectedUnit = (UnitView)_dataTransmitter.SelectedUnit;
+        var unitView = (UnitView)_dataTransmitter.SelectedUnitView;
 
-        if (selectedUnit == null)
+        if (unitView == null || !unitView.Selected)
         {
             return;
         }
         
-        var unitController = selectedUnit.GetComponent<UnitController>();
-
-        if (unitController == null)
-        {
-            return;
-        }
-        
+        var unitController = unitView.GetComponent<UnitController>();
         var pathController = unitController.PathController;
         var path = pathController.Path;
         
@@ -70,10 +69,10 @@ public class MapPass: ScriptableRenderPass
             return;
         }
         
-        for (var i = 0; i < path.Count; i++)
+        for (var i = 0; i < path.Count - 1; i++)
         {
             var waypoint = path[i];
-            waypoint.y = 0.01f;
+            waypoint.y = _offsetY;
             var matrix = Matrix4x4.Translate(waypoint);
             buffer.DrawMesh(_pathMesh, matrix, _waypointMaterial, 0, 0);
         }

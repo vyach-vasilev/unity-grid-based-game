@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4735548372887847348
+--- !u!114 &-7564566455774773350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,33 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be1ae6a934f4e8aac5c89e48e44bf6a, type: 3}
-  m_Name: Map Feature
+  m_Name: PathFeature
   m_EditorClassIdentifier: 
   m_Active: 1
   _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
-  _pathMesh: {fileID: 7018810824537202931, guid: 0de6b0abd4411a34f9c2b0fe79f62f22,
-    type: 3}
-  _selectionMesh: {fileID: -6360558719573625917, guid: eb9ec6d92e2f3ae4993730cb2bfa33b6,
+  _offsetY: 0.01
+  _pathMesh: {fileID: 1846653201744175015, guid: 2daaaddd1e02a7641b303b30c5f0a35a,
     type: 3}
   _selectionMaterial: {fileID: 2100000, guid: 099c9420e34e1a24e9705d7ae1085017, type: 2}
   _waypointMaterial: {fileID: 2100000, guid: 391246039689ebe48b9c6b6a7d03defa, type: 2}
-  _renderPassEvent: 300
---- !u!114 &-4081125951977276772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad27b10f8c3480594be09fa884a6096, type: 3}
-  m_Name: GridFeature
-  m_EditorClassIdentifier: 
-  m_Active: 1
-  _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
-  _gridMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
-  _gridMaterial: {fileID: 2100000, guid: 09030e243e956d849b701ee5d3c25a1c, type: 2}
   _renderPassEvent: 300
 --- !u!114 &11400000
 MonoBehaviour:
@@ -54,9 +36,9 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
       type: 3}
   m_RendererFeatures:
-  - {fileID: -4735548372887847348}
-  - {fileID: -4081125951977276772}
-  m_RendererFeatureMap: 4c3e5749d8f347be9c3ac4c491ed5cc7
+  - {fileID: -7564566455774773350}
+  - {fileID: 3501492270835778614}
+  m_RendererFeatureMap: 9a7fb523e34205973644f12aabcc9730
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -96,3 +78,20 @@ MonoBehaviour:
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 0
+--- !u!114 &3501492270835778614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad27b10f8c3480594be09fa884a6096, type: 3}
+  m_Name: GridFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _gridMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  _gridMaterial: {fileID: 2100000, guid: 09030e243e956d849b701ee5d3c25a1c, type: 2}
+  _renderPassEvent: 300

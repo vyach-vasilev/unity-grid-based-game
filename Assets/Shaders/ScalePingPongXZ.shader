@@ -4,9 +4,9 @@ Shader "VFX/ScalePingPongXZ"
     {
         _MainTex ("Texture", 2D) = "white" {}
         [Hdr]_Color("Color", Color) = (1,1,1,1)
-        _Amplitude("Amplitude", Range(0.1, 2)) = 0.5
-        _ScaleSize("Scale Size", Range(0.5, 3)) = 1.4
-        _Speed("Speed", Range(0.25, 1.5)) = 0.75
+        _Amplitude("Amplitude", Range(0.1, 10)) = 0.5
+        _ScaleSize("Scale Size", Range(0.5, 10)) = 1.4
+        _Speed("Speed", Range(0.25, 5)) = 0.75
     }
     
     SubShader
