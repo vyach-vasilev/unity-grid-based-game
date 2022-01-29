@@ -11,23 +11,33 @@ public class IdleState: State<UnitController, UnitState>
     
     public override void Enter(UnitController entity)
     {
-        Debug.Log("Enter Idle: " + entity.name);
+        //Debug.Log("Enter Idle: " + entity.name);
     }
 
     public override void Execute(UnitController entity)
     {
-        if (entity.View.Selected && entity.InMove)
+        if(entity.View.Selected)
         {
-            _stateMachine.ChangeState(UnitState.Moving);
-        }
-        else if (entity.View.Selected && entity.CanAttack)
-        {
-            _stateMachine.ChangeState(UnitState.Attack);
+            if(!entity.CanAttack)
+            {
+                //TODO: режими переключения сетки (moving / attack)
+                var position = InputManager.Instance.GetWorldNodePosition();
+                entity.OnMoved(position);
+            }
+            
+            if (entity.CanMove)
+            {
+                _stateMachine.ChangeState(UnitState.Moving);
+            }
+            else if (entity.CanAttack)
+            {
+                _stateMachine.ChangeState(UnitState.Attack);
+            }
         }
     }
 
     public override void Exit(UnitController entity)
     {
-        Debug.Log("Exit Idle: " + entity.name);
+        //Debug.Log("Exit Idle: " + entity.name);
     }
 }

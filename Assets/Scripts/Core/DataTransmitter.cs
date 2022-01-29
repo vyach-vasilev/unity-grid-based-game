@@ -5,5 +5,4 @@ public class DataTransmitter : ScriptableObject
 {
     public IUnitView SelectedUnitView { get; set; }
     public Transform GridTransform { get; set; }
-
 }

@@ -1,11 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class InputManager
 {
     public static InputManager Instance;
     
-    public event Action<Vector3> OnMoved;
     public bool IsMoveLocked { get; set; }
 
     public static void Initialize()
@@ -48,12 +46,6 @@ public class InputManager
         }
 
         return false;
-    }
-    
-    public void GetDestinationPosition()
-    {
-        var position = GetWorldNodePosition();
-        OnMoved?.Invoke(position);
     }
     
     public Vector3 GetWorldNodePosition()

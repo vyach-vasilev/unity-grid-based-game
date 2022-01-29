@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 
 public class AttackState : State<UnitController, UnitState>
@@ -13,7 +12,7 @@ public class AttackState : State<UnitController, UnitState>
 
     public override void Enter(UnitController entity)
     {
-        Debug.Log("Enter Attack: " + entity.name);
+        //Debug.Log("Enter Attack: " + entity.name);
     }
 
     public override void Execute(UnitController entity)
@@ -34,7 +33,7 @@ public class AttackState : State<UnitController, UnitState>
 
     public override void Exit(UnitController entity)
     {
-        Debug.Log("Exit Attack: " + entity.name);
+        //Debug.Log("Exit Attack: " + entity.name);
     }
 
     private async void AttackProcess(UnitController entity)
@@ -42,6 +41,12 @@ public class AttackState : State<UnitController, UnitState>
         while (entity.InAttack)
         {
             await Task.Yield();
+            
+            if (!entity)
+            {
+                Interrupt();
+                break;
+            }
             
             entity.transform.rotation = InputManager.Instance.RotateOnMouseDirection(entity);
             
@@ -59,6 +64,12 @@ public class AttackState : State<UnitController, UnitState>
                 var elapsedTime = 0f;
                 while (elapsedTime < 2f)
                 {
+                    if (!entity)
+                    {
+                        Interrupt();
+                        break;
+                    }
+                    
                     entity.transform.rotation = Quaternion.Lerp(
                         entity.transform.rotation, 
                         targetRotation, elapsedTime);

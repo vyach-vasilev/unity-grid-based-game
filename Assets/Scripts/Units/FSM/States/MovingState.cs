@@ -10,13 +10,19 @@ public class MovingState: State<UnitController, UnitState>
     }
     public override void Enter(UnitController entity)
     {
-        Debug.Log("Enter Moving: " + entity.name);
+        //Debug.Log("Enter Moving: " + entity.name);
     }
 
     public override void Execute(UnitController entity)
     {
         var path = entity.PathController.Path;
-        if (path.Count <= 0)
+        
+        if (path == null)
+        {
+            return;
+        }
+
+        if (path.Count<= 0)
         {
             return;
         }
@@ -31,7 +37,7 @@ public class MovingState: State<UnitController, UnitState>
 
     public override void Exit(UnitController entity)
     {
-        Debug.Log("Exit Moving: " + entity.name);
+        //Debug.Log("Exit Moving: " + entity.name);
         entity.Animator.SetBool(AnimatorIds.MovingId, false);
     }
 }

@@ -10,12 +10,15 @@ public class UnitController : MonoBehaviour, IUnitController
     private UnitSelectionController _selectionController;
     private DataTransmitter _dataTransmitter;
     private FSMController _fsmController;
-
+    private VFXMarker _vfxMarker;
+    
     [SerializeField, Range(1, 20)] private float _movementSpeed = 10;
 
     public Animator Animator => GetComponentInChildren<Animator>();
     public UnitView View => (UnitView)_view;
     public UnitPathController PathController => _pathController;
+
+    public bool CanMove => Input.GetMouseButtonDown(1);
 
     public bool InMove => _pathController.IsMoving;
     public bool CanAttack => Input.GetKeyDown(KeyCode.Space);
@@ -33,6 +36,7 @@ public class UnitController : MonoBehaviour, IUnitController
         _fsmController = new FSMController(this);
         
         _view.Position = _model.Position;
+        _vfxMarker = GetComponentInChildren<VFXMarker>();
     }
     
     public void TransferData(DataTransmitter dataTransmitter)
@@ -41,16 +45,26 @@ public class UnitController : MonoBehaviour, IUnitController
         _selectionController.SetTransferData(_dataTransmitter);
     }
 
+    public void OnMoved(Vector3 destination)
+    {
+        var selectedView = (UnitView)_dataTransmitter.SelectedUnitView;
+        _pathController.Update(selectedView, _movementSpeed);
+        _pathController.OnMoved(destination);
+    }
+    
+    public void ActivateVFX()
+    {
+        _vfxMarker.Slash.Play();
+    }
+    
     public void Subscribe()
     {
-        _inputManager.OnMoved += OnMoved;
         _view.OnSelect += _selectionController.OnSelect;
         _view.OnDeselect += _selectionController.OnDeselect;
     }
 
     private void Unsubscribe()
     {
-        _inputManager.OnMoved -= OnMoved;
         _view.OnSelect -= _selectionController.OnSelect;
         _view.OnDeselect -= _selectionController.OnDeselect;
     }
@@ -63,18 +77,7 @@ public class UnitController : MonoBehaviour, IUnitController
     private void Update()
     {
         _selectionController.Update();
-
-        if (!_view.Selected) return;
-        
-        _inputManager.GetDestinationPosition();
         _fsmController.Update();
-    }
-    
-    private void OnMoved(Vector3 destination)
-    {
-        var selectedView = (UnitView)_dataTransmitter.SelectedUnitView;
-        _pathController.Update(selectedView, _movementSpeed);
-        _pathController.OnMoved(destination);
     }
     
     private void OnDestroy()

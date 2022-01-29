@@ -45,6 +45,16 @@ public class UnitStateMachine<T, U>
             Debug.LogError(newState + " is not Registered.");
         }
     }
+
+    public State<T, U> TryGetState(U state)
+    { 
+        if (!_stateDictionary.ContainsKey(state)) 
+        {
+            Debug.LogError(state + " is not Registered.");
+        } 
+        
+        return _stateDictionary[state];
+    }
     
     public void RevertToPreviousState()
     {

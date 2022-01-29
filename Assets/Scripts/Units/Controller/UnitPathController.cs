@@ -7,8 +7,8 @@ public class UnitPathController
     private readonly InputManager _inputManager;
     private readonly Transform _transform;
     private readonly List<Vector3> _retracedPath = new();
-
-    private UnitController _unitController;
+    private readonly UnitController _unitController;
+    
     private UnitView _selectedView;
     private int _targetIndex;
     private List<Vector3> _path;
@@ -38,7 +38,6 @@ public class UnitPathController
     {
         var canMove = 
             _unitController.View == _selectedView && 
-            _unitController.View.Selected && 
             !_isMoving &&
             !_unitController.InAttack;
         
