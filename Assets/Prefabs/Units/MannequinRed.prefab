@@ -1378,6 +1378,7 @@ GameObject:
   - component: {fileID: -720742412407364275}
   - component: {fileID: -6682855839194904582}
   - component: {fileID: 8994079476333321438}
+  - component: {fileID: 1200400636514734326}
   m_Layer: 7
   m_Name: MannequinRed
   m_TagString: Untagged
@@ -1461,6 +1462,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e43014492684405ad850818fdceda36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1200400636514734326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5836777707736050874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167ebfe406034ed8a0cbb3820f678fec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effects:
+  - {fileID: 8224951096804601604}
 --- !u!1 &6169343957535068005
 GameObject:
   m_ObjectHideFlags: 0
@@ -2367,7 +2382,7 @@ PrefabInstance:
     - target: {fileID: 7423140046214852201, guid: f9759fb352859e448aebb470fa0ea630,
         type: 3}
       propertyPath: m_Name
-      value: slash
+      value: Slash
       objectReference: {fileID: 0}
     - target: {fileID: 7426268093970895909, guid: f9759fb352859e448aebb470fa0ea630,
         type: 3}
@@ -2429,6 +2444,12 @@ PrefabInstance:
 --- !u!4 &8136655519053725328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7426268093970895909, guid: f9759fb352859e448aebb470fa0ea630,
+    type: 3}
+  m_PrefabInstance: {fileID: 1721591572565912245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8224951096804601604 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 7332061507349874097, guid: f9759fb352859e448aebb470fa0ea630,
     type: 3}
   m_PrefabInstance: {fileID: 1721591572565912245}
   m_PrefabAsset: {fileID: 0}

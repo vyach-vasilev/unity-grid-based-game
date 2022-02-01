@@ -3,6 +3,7 @@
 public class IdleState: State<UnitController, UnitState>
 {
     private readonly UnitStateMachine<UnitController, UnitState> _stateMachine;
+    private InputManager _inputManager;
     
     public IdleState(UnitState id, UnitStateMachine<UnitController, UnitState> stateMachine) : base(id)
     {
@@ -11,33 +12,41 @@ public class IdleState: State<UnitController, UnitState>
     
     public override void Enter(UnitController entity)
     {
-        //Debug.Log("Enter Idle: " + entity.name);
+        _inputManager = InputManager.Instance;
     }
 
     public override void Execute(UnitController entity)
     {
-        if(entity.View.Selected)
+        if (entity.View != (UnitView)entity.DataTransmitter.SelectedUnitView) return;
+
+        if (!entity.View.Selected) return;
+
+        if(!_inputManager.CanAttack)
         {
-            if(!entity.CanAttack)
-            {
-                //TODO: режими переключения сетки (moving / attack)
-                var position = InputManager.Instance.GetWorldNodePosition();
-                entity.OnMoved(position);
-            }
-            
-            if (entity.CanMove)
-            {
-                _stateMachine.ChangeState(UnitState.Moving);
-            }
-            else if (entity.CanAttack)
-            {
-                _stateMachine.ChangeState(UnitState.Attack);
-            }
+            //TODO: режими переключения сетки (moving / attack)
+            var position = _inputManager.GetWorldNodePosition();
+            entity.OnMoved(position);
+        }
+        
+        if (AvailableMove())
+        {
+            _stateMachine.ChangeState(UnitState.Moving);
+        }
+        else if (_inputManager.CanAttack)
+        {
+            _stateMachine.ChangeState(UnitState.Attack);
         }
     }
 
     public override void Exit(UnitController entity)
     {
-        //Debug.Log("Exit Idle: " + entity.name);
+    }
+
+    private bool AvailableMove()
+    {
+        return
+            _inputManager.CanMove &&
+            _inputManager.GetWorldNodePosition() != Vector3.down && 
+            _inputManager.IsWalkableNode();
     }
 }

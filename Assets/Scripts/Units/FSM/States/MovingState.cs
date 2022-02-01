@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class MovingState: State<UnitController, UnitState>
 {
@@ -15,14 +16,7 @@ public class MovingState: State<UnitController, UnitState>
 
     public override void Execute(UnitController entity)
     {
-        var path = entity.PathController.Path;
-        
-        if (path == null)
-        {
-            return;
-        }
-
-        if (path.Count<= 0)
+        if (!IsPathValid(entity, out var path))
         {
             return;
         }
@@ -39,5 +33,11 @@ public class MovingState: State<UnitController, UnitState>
     {
         //Debug.Log("Exit Moving: " + entity.name);
         entity.Animator.SetBool(AnimatorIds.MovingId, false);
+    }
+
+    private bool IsPathValid(UnitController entity, out List<Vector3> path)
+    {
+        path = entity.PathController.Path;
+        return path is { Count: > 0 };
     }
 }

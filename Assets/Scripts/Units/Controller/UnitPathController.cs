@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class UnitPathController
 {
-    private readonly InputManager _inputManager;
     private readonly Transform _transform;
     private readonly List<Vector3> _retracedPath = new();
     private readonly UnitController _unitController;
-    
-    private UnitView _selectedView;
+    private readonly float _speed;
+
     private int _targetIndex;
     private List<Vector3> _path;
-    
-    private float _speed;
     private bool _isMoving;
 
     public List<Vector3> Path => _path;
@@ -21,23 +18,16 @@ public class UnitPathController
     public List<Vector3> AvailablePath => GetAvailablePath();
     public bool IsMoving => _isMoving;
     
-    public UnitPathController(UnitController unitController, InputManager inputManager, Transform transform)
+    public UnitPathController(UnitController unitController, Transform transform, float speed)
     {
         _unitController = unitController;
-        _inputManager = inputManager;
         _transform = transform;
-    }
-
-    public void Update(UnitView selectedView, float speed)
-    {
-        _selectedView = selectedView;
         _speed = speed;
     }
-    
+
     public void OnMoved(Vector3 destination)
     {
         var canMove = 
-            _unitController.View == _selectedView && 
             !_isMoving &&
             !_unitController.InAttack;
         
@@ -62,7 +52,7 @@ public class UnitPathController
                 return;
             }
 
-            if (Input.GetMouseButtonDown(1) && _inputManager.IsMoveLocked)
+            if (InputManager.Instance.CanMove)
             {
                 _isMoving = true;
                 FollowPath();
@@ -72,7 +62,6 @@ public class UnitPathController
 
     private async void FollowPath()
     {
-        _inputManager.IsMoveLocked = false;
         var currentWaypoint = _path[0];
         while (true)
         {
@@ -100,7 +89,7 @@ public class UnitPathController
 
             await Task.Yield();
         }
-        _inputManager.IsMoveLocked = true;
+
         _isMoving = false;
     }
 
@@ -124,5 +113,4 @@ public class UnitPathController
         list.Add(_path[0]);
         return list;
     }
-
 }

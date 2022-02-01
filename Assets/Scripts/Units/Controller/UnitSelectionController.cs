@@ -4,13 +4,13 @@ public class UnitSelectionController
 {
     private readonly InputManager _inputManager;
     private readonly IUnitView _view;
-    
+
     private DataTransmitter _data;
     private UnitView View => (UnitView)_view;
 
-    public UnitSelectionController(InputManager inputManager, IUnitView view)
+    public UnitSelectionController(IUnitView view)
     {
-        _inputManager = inputManager;
+        _inputManager = InputManager.Instance;
         _view = view;
     }
 
@@ -21,23 +21,17 @@ public class UnitSelectionController
     
     public void Select()
     {
-        if (_inputManager.TryGetUnit(out var unitView))
-        {
-            if (_view != unitView)
-            {
-                return;
-            }
+        if (!_inputManager.TryGetUnit(out var unitView)) return;
+        if (_view != unitView) return;
+
+        TryDeselect();
             
-            TryDeselect();
-            
-            _view.Selected = true;
-            _inputManager.IsMoveLocked = true;
-        }
+        _view.Selected = true;
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) || _inputManager.IsNeedDeselect())
+        if (_inputManager.DeselectAll || _inputManager.IsNeedDeselect())
         {
             TryDeselect();
         }
@@ -45,31 +39,25 @@ public class UnitSelectionController
     
     public void OnDeselect(object sender, UnitSelectEvent e)
     {
-        if (_view != sender || _data.SelectedUnitView != _view)
-        {
-            return;
-        }
+        if (_view != sender || _data.SelectedUnitView != _view) return;
+        
         View.SetEmission(false);
         _data.SelectedUnitView = null;
     }
 
     public void OnSelect(object sender, UnitSelectEvent e)
     {
-        if (_view != sender || _data.SelectedUnitView == _view)
-        {
-            return;
-        }
+        if (_view != sender || _data.SelectedUnitView == _view) return;
+        
         View.SetEmission(true);
         _data.SelectedUnitView = _view;
     }
     
     private void TryDeselect()
     {
-        if (_view.Selected || _data.SelectedUnitView != null)
-        {
-            _data.SelectedUnitView.Selected = false;
-            _view.Selected = false;
-            _inputManager.IsMoveLocked = false;
-        }
+        if (!_view.Selected && _data.SelectedUnitView == null) return;
+        
+        _data.SelectedUnitView.Selected = false;
+        _view.Selected = false;
     }
 }

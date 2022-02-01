@@ -4,8 +4,10 @@ public class InputManager
 {
     public static InputManager Instance;
     
-    public bool IsMoveLocked { get; set; }
-
+    public bool CanMove => Input.GetMouseButtonDown(1);
+    public bool CanAttack => Input.GetKeyDown(KeyCode.Space);
+    public bool DeselectAll => Input.GetKeyDown(KeyCode.Escape);
+    
     public static void Initialize()
     {
         Instance = new InputManager();
@@ -35,14 +37,7 @@ public class InputManager
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out var hit))
-            {
-                if (!hit.transform.TryGetComponent<IUnitView>(out _)) return true;
-            }
-            else
-            {
-                return true;
-            }
+            return !Physics.Raycast(ray, out var hit) || !hit.transform.TryGetComponent<IUnitView>(out _);
         }
 
         return false;
@@ -57,11 +52,22 @@ public class InputManager
             if (!hit.transform.TryGetComponent<MapController>(out _)) return Vector3.down;
                 
             var point = hit.point;
-            var map = NodeMap.Instance;
-            return map.NodeFromWorldPoint(point).WorldPosition;
+            return NodeMap.Instance.NodeFromWorldPoint(point).WorldPosition;
         }
 
         return Vector3.down;
+    }
+
+    public Node GetWorldNode()
+    {
+        var position = GetWorldNodePosition();
+        return NodeMap.Instance.NodeFromWorldPoint(position);
+    }
+    
+    public bool IsWalkableNode()
+    {
+        var node = GetWorldNode();
+        return node.Walkable;
     }
     
     public Quaternion RotateOnMouseDirection(UnitController entity)
