@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 
 public class OutlineFeature : ScriptableRendererFeature
 {
-    private OutlinePass _outlinePass;
+    private OutlinePass _pass;
     private Material _outlineMaterial;
     private Material _colorMaterial;
     
@@ -18,8 +18,8 @@ public class OutlineFeature : ScriptableRendererFeature
     
     public override void Create()
     {
-        _outlinePass = new OutlinePass(_layerMask, _color, _width, _colorMaterial, _outlineMaterial, _shaderPassNames);
-        _outlinePass.renderPassEvent = _renderPassEvent;
+        _pass = new OutlinePass(_layerMask, _color, _width, _colorMaterial, _outlineMaterial, _shaderPassNames);
+        _pass.renderPassEvent = _renderPassEvent;
     }
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
@@ -28,8 +28,9 @@ public class OutlineFeature : ScriptableRendererFeature
         {
             return;
         }
-        _outlinePass.Setup(renderer);
-        renderer.EnqueuePass(_outlinePass);
+        
+        _pass.Setup(renderer);
+        renderer.EnqueuePass(_pass);
     }
     
     public void OnEnable()

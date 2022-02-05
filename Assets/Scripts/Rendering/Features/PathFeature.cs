@@ -4,8 +4,8 @@ using UnityEngine.Rendering.Universal;
 public class PathFeature: ScriptableRendererFeature
 {
     private PathPass _pass;
+    private DataProxy _dataProxy;
     
-    [SerializeField] private DataTransmitter _dataTransmitter;
     [SerializeField, Min(0.01f)] private float _offsetY = 0.01f;
     [SerializeField] private Mesh _pathMesh;
     [SerializeField] private Material _selectionMaterial;
@@ -14,7 +14,7 @@ public class PathFeature: ScriptableRendererFeature
     
     public override void Create()
     {
-        _pass = new PathPass(_waypointMaterial, _selectionMaterial, _pathMesh, _offsetY, _dataTransmitter);
+        _pass = new PathPass(_waypointMaterial, _selectionMaterial, _pathMesh, _offsetY, _dataProxy);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -30,9 +30,18 @@ public class PathFeature: ScriptableRendererFeature
     private bool IsValid()
     {
         return
-            _selectionMaterial && _waypointMaterial &&
-            _pathMesh != null &&
-            _dataTransmitter != null &&
+            _selectionMaterial && 
+            _waypointMaterial &&
+            _pathMesh &&
+            _dataProxy &&
             InputManager.Instance != null;
+    }
+    
+    public void OnEnable()
+    {
+        if (_dataProxy == null)
+        {
+            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        }
     }
 }

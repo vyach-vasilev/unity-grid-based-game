@@ -10,15 +10,15 @@ public class PathPass : ScriptableRenderPass
     private readonly Material _selectionMaterial;
     private readonly Mesh _pathMesh;
     private readonly float _offsetY;
-    private readonly DataTransmitter _dataTransmitter;
+    private readonly DataProxy _dataProxy;
     
-    public PathPass(Material waypointMaterial, Material selectionMaterial, Mesh pathMesh, float offsetY, DataTransmitter dataTransmitter)
+    public PathPass(Material waypointMaterial, Material selectionMaterial, Mesh pathMesh, float offsetY, DataProxy dataProxy)
     {
         _waypointMaterial = waypointMaterial;
         _selectionMaterial = selectionMaterial;
         _pathMesh = pathMesh;
         _offsetY = offsetY;
-        _dataTransmitter = dataTransmitter;
+        _dataProxy = dataProxy;
     }
 
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -78,9 +78,9 @@ public class PathPass : ScriptableRenderPass
     {
         // TODO: подумать как отрефакторить. Надо получать pathController без всех этих усложнений и get component.
         pathController = null;
-        if (_dataTransmitter.SelectedUnitView == null) return false;
+        if (_dataProxy.SelectedUnitView == null) return false;
 
-        var unitView = (UnitView)_dataTransmitter.SelectedUnitView;
+        var unitView = (UnitView)_dataProxy.SelectedUnitView;
         if (unitView == null || !unitView.Selected) return false;
 
         var unitController = unitView.GetComponent<UnitController>();

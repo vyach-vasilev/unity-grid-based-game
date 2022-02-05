@@ -14,15 +14,15 @@ public class GridPass: ScriptableRenderPass
     private readonly Vector2Int _tiling;
     private readonly float _thickness;
     private readonly Material _material;
-    private readonly DataTransmitter _dataTransmitter;
+    private readonly DataProxy _dataProxy;
 
-    public GridPass(Color color, Vector2Int tiling, float thickness, Material material, DataTransmitter dataTransmitter)
+    public GridPass(Color color, Vector2Int tiling, float thickness, Material material, DataProxy dataProxy)
     {
         _color = color;
         _tiling = tiling;
         _thickness = thickness;
         _material = material;
-        _dataTransmitter = dataTransmitter;
+        _dataProxy = dataProxy;
     }
     
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -32,7 +32,7 @@ public class GridPass: ScriptableRenderPass
 
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
-            var position = _dataTransmitter.GridTransform.position;
+            var position = _dataProxy.GridTransform.position;
             var matrix = Matrix4x4.Translate(position);
             
             _material.SetColor(ColorId, _color);

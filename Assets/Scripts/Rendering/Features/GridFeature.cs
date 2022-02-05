@@ -1,14 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class GridFeature: ScriptableRendererFeature
 {
     private GridPass _pass;
-    private Material _gridMaterial;
+    private Material _material;
+    private DataProxy _dataProxy;
     
-    [SerializeField] private DataTransmitter _dataTransmitter;
     [SerializeField] private Color _color;
     [SerializeField] private Vector2Int _tiling = new(10, 10);
     [SerializeField, Range(0,1)] private float _thickness = 0.95f;
@@ -16,7 +15,7 @@ public class GridFeature: ScriptableRendererFeature
     
     public override void Create()
     {
-        _pass = new GridPass(_color, _tiling, _thickness, _gridMaterial, _dataTransmitter);
+        _pass = new GridPass(_color, _tiling, _thickness, _material, _dataProxy);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -31,17 +30,17 @@ public class GridFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
-        return _dataTransmitter && _dataTransmitter.GridTransform &&_gridMaterial;
+        return _dataProxy && _dataProxy.GridTransform &&_material;
     }
 
     private void OnEnable()
     {
-        if(_gridMaterial == null)
-            _gridMaterial = CoreUtils.CreateEngineMaterial("Shader Graphs/Grid");
+        if(_material == null)
+            _material = CoreUtils.CreateEngineMaterial("Shader Graphs/Grid");
     }
 
     private void OnDisable()
     {
-        _gridMaterial = null;
+        _material = null;
     }
 }

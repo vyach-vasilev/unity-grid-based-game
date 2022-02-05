@@ -710,12 +710,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cccb15313c1aab4fa4d6c84f83d05d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unWalkableMask:
+  _unwalkableMask:
     serializedVersion: 2
-    m_Bits: 4
+    m_Bits: 68
   _nodeRadius: 0.5
   _mapSize: {x: 10, y: 10}
-  _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _dataProxy: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -892,7 +892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitsStorage: {fileID: 11400000, guid: f9439f70b0944154c894f34dac323b0d, type: 2}
-  _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _dataProxy: {fileID: 0}
 --- !u!4 &1458518240
 Transform:
   m_ObjectHideFlags: 0

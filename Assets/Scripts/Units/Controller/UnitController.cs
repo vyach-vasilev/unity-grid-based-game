@@ -8,7 +8,7 @@ public class UnitController : MonoBehaviour, IUnitController
     private UnitPathController _pathController;
     private UnitSelectionController _selectionController;
     
-    private DataTransmitter _dataTransmitter;
+    private DataProxy _dataProxy;
     private FSMController _fsmController;
     
     [SerializeField, Range(1, 20)] private float _movementSpeed = 10;
@@ -18,7 +18,7 @@ public class UnitController : MonoBehaviour, IUnitController
     public UnitModel Model => (UnitModel)_model;
     
     public UnitPathController PathController => _pathController;
-    public DataTransmitter DataTransmitter => _dataTransmitter;
+    public DataProxy DataProxy => _dataProxy;
     public bool InMove => _pathController.IsMoving;
     public bool InAttack { get; set; }
     
@@ -36,11 +36,11 @@ public class UnitController : MonoBehaviour, IUnitController
     
     public void OnMoved(Vector3 destination) => _pathController.OnMoved(destination);
     
-    public void SetData(DataTransmitter dataTransmitter)
+    public void SetData(DataProxy dataProxy)
     {
-        _dataTransmitter = dataTransmitter;
+        _dataProxy = dataProxy;
         CacheData();
-        _selectionController.SetTransferData(_dataTransmitter);
+        _selectionController.SetTransferData(_dataProxy);
     }
 
     public void Subscribe()
@@ -57,9 +57,9 @@ public class UnitController : MonoBehaviour, IUnitController
 
     private void CacheData()
     {
-        if (!_dataTransmitter.UnitsCollection.ContainsKey(Model.Owner))
+        if (!_dataProxy.UnitsRenderer.ContainsKey(Model.Owner))
         {
-            _dataTransmitter.UnitsCollection.Add(Model.Owner, this);
+            _dataProxy.UnitsRenderer.Add(Model.Owner, View.Renderer);
         }
     }
     

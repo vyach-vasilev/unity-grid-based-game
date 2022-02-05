@@ -5,14 +5,18 @@ using UnityEngine.Rendering.Universal;
 public class SeeThroughFeature: ScriptableRendererFeature
 {
     private SeeThoughPass _pass;
-    private Material _material;
-
-    [SerializeField] private DataTransmitter _dataTransmitter;
+    private Material _material; 
+    private DataProxy _dataProxy;
+    
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     
     public override void Create()
     {
-        _pass = new SeeThoughPass(_material, _dataTransmitter.UnitsCollection);
+        if (_dataProxy == null)
+        {
+            return;
+        }
+        _pass = new SeeThoughPass(_material, _dataProxy);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -27,26 +31,20 @@ public class SeeThroughFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
-        return _material && _dataTransmitter != null && _dataTransmitter.UnitsCollection != null && _dataTransmitter.UnitsCollection.Count > 0;
+        return _dataProxy && _material && _dataProxy.UnitsRenderer is { Count: > 0 };
     }
     
     public void OnEnable()
     {
-        CreateMaterials();
+        if (_dataProxy == null)
+        {
+            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        }
+        if(_material == null)
+            _material = CoreUtils.CreateEngineMaterial("Hidden/SeeThrough");    
     }
 
     public void OnDisable()
-    {
-        DestroyMaterials();
-    }
-    
-    private void CreateMaterials()
-    {
-        if(_material == null)
-            _material = CoreUtils.CreateEngineMaterial("Hidden/SeeThrough");
-    }
-    
-    private void DestroyMaterials()
     {
         _material = null;
     }

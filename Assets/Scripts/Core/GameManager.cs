@@ -6,12 +6,12 @@ public class GameManager: MonoBehaviour
     private InputManager _inputManager;
 
     [SerializeField] private UnitsStorage _unitsStorage;
-    [SerializeField] private DataTransmitter _dataTransmitter;
+    [SerializeField] private DataProxy _dataProxy;
     
     private void Awake()
-    {
+    { 
+        CheckData();
         InputManager.Initialize();
-        
         foreach (var unitData in _unitsStorage.UnitDataList)
         {
             CreateUnits(unitData);
@@ -35,7 +35,20 @@ public class GameManager: MonoBehaviour
         var controllerFactory = new UnitControllerFactory(unitModel, unitView);
         var unitController = (UnitController)controllerFactory.Controller;
         unitController.transform.position = unitModel.Position;
-        unitController.SetData(_dataTransmitter);
+        unitController.SetData(_dataProxy);
         unitController.Subscribe();
+    }
+
+    private void CheckData()
+    {
+        if (_dataProxy == null)
+        {
+            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        }
+        
+        if (_unitsStorage == null)
+        {
+            _unitsStorage = Resources.Load<UnitsStorage>("GameData/UnitsStorage");
+        }
     }
 }

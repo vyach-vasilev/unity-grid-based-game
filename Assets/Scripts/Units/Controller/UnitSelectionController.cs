@@ -3,7 +3,7 @@
     private readonly InputManager _inputManager;
     private readonly IUnitView _view;
 
-    private DataTransmitter _data;
+    private DataProxy _data;
     private UnitView View => (UnitView)_view;
 
     public UnitSelectionController(IUnitView view)
@@ -12,7 +12,7 @@
         _view = view;
     }
 
-    public void SetTransferData(DataTransmitter data)
+    public void SetTransferData(DataProxy data)
     {
         _data = data;
     }
