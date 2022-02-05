@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class UnitSelectionController
+﻿public class UnitSelectionController
 {
     private readonly InputManager _inputManager;
     private readonly IUnitView _view;

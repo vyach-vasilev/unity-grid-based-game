@@ -15,6 +15,8 @@ public class UnitController : MonoBehaviour, IUnitController
 
     public Animator Animator => GetComponentInChildren<Animator>();
     public UnitView View => (UnitView)_view;
+    public UnitModel Model => (UnitModel)_model;
+    
     public UnitPathController PathController => _pathController;
     public DataTransmitter DataTransmitter => _dataTransmitter;
     public bool InMove => _pathController.IsMoving;
@@ -34,9 +36,10 @@ public class UnitController : MonoBehaviour, IUnitController
     
     public void OnMoved(Vector3 destination) => _pathController.OnMoved(destination);
     
-    public void TransferData(DataTransmitter dataTransmitter)
+    public void SetData(DataTransmitter dataTransmitter)
     {
         _dataTransmitter = dataTransmitter;
+        CacheData();
         _selectionController.SetTransferData(_dataTransmitter);
     }
 
@@ -52,6 +55,14 @@ public class UnitController : MonoBehaviour, IUnitController
         _view.OnDeselect -= _selectionController.OnDeselect;
     }
 
+    private void CacheData()
+    {
+        if (!_dataTransmitter.UnitsCollection.ContainsKey(Model.Owner))
+        {
+            _dataTransmitter.UnitsCollection.Add(Model.Owner, this);
+        }
+    }
+    
     private void OnMouseDown()
     {
         _selectionController.Select();

@@ -64,8 +64,8 @@
 				discard;
 			}
 
-			float intensity = CalcIntensity(i.uv, float2(0, _MainTex_TexelSize.y));
-			return float4(_Color.rgb, saturate(_Color.a * step(0.01, intensity)));
+			const float intensity = CalcIntensity(i.uv, float2(0, _MainTex_TexelSize.y));
+			return float4(_Color.rgb, saturate(_Color.a * intensity * 20));
 		}
 
 	ENDHLSL

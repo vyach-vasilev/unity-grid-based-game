@@ -35,7 +35,7 @@ public class GameManager: MonoBehaviour
         var controllerFactory = new UnitControllerFactory(unitModel, unitView);
         var unitController = (UnitController)controllerFactory.Controller;
         unitController.transform.position = unitModel.Position;
-        unitController.TransferData(_dataTransmitter);
+        unitController.SetData(_dataTransmitter);
         unitController.Subscribe();
     }
 }

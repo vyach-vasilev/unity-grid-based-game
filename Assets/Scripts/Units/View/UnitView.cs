@@ -8,6 +8,8 @@ public class UnitView: MonoBehaviour, IUnitView
     
     public event EventHandler<UnitSelectEvent> OnSelect = (_, _) => {};
     public event EventHandler<UnitSelectEvent> OnDeselect = (_, _) => {};
+
+    public Renderer Renderer => _renderer;
     
     private void Awake()
     {
