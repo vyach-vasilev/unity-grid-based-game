@@ -12,22 +12,25 @@ public class InputManager
     {
         Instance = new InputManager();
     }
+
+    public IUnitView OnUnitHover()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        return Physics.Raycast(ray, out var hit) ? hit.transform.GetComponent<IUnitView>() : null;
+    }
     
-    public bool TryGetUnit(out IUnitView selectedUnit)
+    public bool TrySelectUnit(out IUnitView selectedUnit)
     {
         selectedUnit = default;
-
         if (Input.GetMouseButtonDown(0))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-    
             if (Physics.Raycast(ray, out var hit))
             {
                 selectedUnit = hit.transform.GetComponent<IUnitView>();
                 return true;
             }
         }
-
         return false;
     }
 

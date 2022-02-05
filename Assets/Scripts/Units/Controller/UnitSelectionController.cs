@@ -21,7 +21,7 @@ public class UnitSelectionController
     
     public void Select()
     {
-        if (!_inputManager.TryGetUnit(out var unitView)) return;
+        if (!_inputManager.TrySelectUnit(out var unitView)) return;
         if (_view != unitView) return;
 
         TryDeselect();
@@ -31,12 +31,19 @@ public class UnitSelectionController
 
     public void Update()
     {
+        OnHover();
         if (_inputManager.DeselectAll || _inputManager.IsNeedDeselect())
         {
             TryDeselect();
         }
     }
-    
+
+    private void OnHover()
+    {
+        var view = _inputManager.OnUnitHover();
+        View.SetOutline(view != null && _view == view);
+    }
+
     public void OnDeselect(object sender, UnitSelectEvent e)
     {
         if (_view != sender || _data.SelectedUnitView != _view) return;
