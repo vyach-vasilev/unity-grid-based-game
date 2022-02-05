@@ -4,27 +4,42 @@ using UnityEngine.Rendering.Universal;
 
 public class GridPass: ScriptableRenderPass
 {
+    private static readonly int ColorId = Shader.PropertyToID("_Color");
+    private static readonly int TilingId = Shader.PropertyToID("_Tiling");
+    private static readonly int ThicknessId = Shader.PropertyToID("_Thickness");
+    
     private readonly string _profilerTag = "Grid Feature";
     
-    private readonly Mesh _gridMesh;
-    private readonly Material _gridMaterial;
+    private readonly Color _color;
+    private readonly Vector2Int _tiling;
+    private readonly float _thickness;
+    private readonly Material _material;
     private readonly DataTransmitter _dataTransmitter;
 
-    public GridPass(Mesh gridMesh, Material gridMaterial, DataTransmitter dataTransmitter)
+    public GridPass(Color color, Vector2Int tiling, float thickness, Material material, DataTransmitter dataTransmitter)
     {
-        _gridMesh = gridMesh;
-        _gridMaterial = gridMaterial;
+        _color = color;
+        _tiling = tiling;
+        _thickness = thickness;
+        _material = material;
         _dataTransmitter = dataTransmitter;
     }
     
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         var buffer = CommandBufferPool.Get(_profilerTag);
+        var mesh = ResourcesUtilities.GetDefaultPrimitiveMesh(PrimitiveType.Plane);
+
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
             var position = _dataTransmitter.GridTransform.position;
             var matrix = Matrix4x4.Translate(position);
-            buffer.DrawMesh(_gridMesh, matrix, _gridMaterial, 0, 0);
+            
+            _material.SetColor(ColorId, _color);
+            _material.SetVector(TilingId, new Vector4(_tiling.x, _tiling.y));
+            _material.SetFloat(ThicknessId, _thickness);
+            
+            buffer.DrawMesh(mesh, matrix, _material, 0, 0);
         }
         context.ExecuteCommandBuffer(buffer);
         CommandBufferPool.Release(buffer);    

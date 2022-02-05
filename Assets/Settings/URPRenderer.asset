@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7564566455774773350
+--- !u!114 &-7192525742370184430
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,16 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3be1ae6a934f4e8aac5c89e48e44bf6a, type: 3}
-  m_Name: PathFeature
+  m_Script: {fileID: 11500000, guid: 3ad27b10f8c3480594be09fa884a6096, type: 3}
+  m_Name: GridFeature
   m_EditorClassIdentifier: 
   m_Active: 1
   _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
-  _offsetY: 0.01
-  _pathMesh: {fileID: 1846653201744175015, guid: 2daaaddd1e02a7641b303b30c5f0a35a,
-    type: 3}
-  _selectionMaterial: {fileID: 2100000, guid: 099c9420e34e1a24e9705d7ae1085017, type: 2}
-  _waypointMaterial: {fileID: 2100000, guid: 391246039689ebe48b9c6b6a7d03defa, type: 2}
+  _gridMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+  _color: {r: 1, g: 1, b: 1, a: 1}
+  _tiling: {x: 10, y: 10}
+  _thickness: 0.95
   _renderPassEvent: 300
 --- !u!114 &11400000
 MonoBehaviour:
@@ -36,9 +35,10 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
       type: 3}
   m_RendererFeatures:
-  - {fileID: -7564566455774773350}
-  - {fileID: 3501492270835778614}
-  m_RendererFeatureMap: 9a7fb523e34205973644f12aabcc9730
+  - {fileID: -7192525742370184430}
+  - {fileID: 5134302283513218154}
+  - {fileID: 6493428911056381617}
+  m_RendererFeatureMap: 12232ce8f1032f9c6a444862b9b44047b166c4e1304b1d5a
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -73,12 +73,12 @@ MonoBehaviour:
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
-  m_DepthPrimingMode: 0
+  m_DepthPrimingMode: 2
   m_AccurateGbufferNormals: 0
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 0
---- !u!114 &3501492270835778614
+--- !u!114 &5134302283513218154
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -87,11 +87,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad27b10f8c3480594be09fa884a6096, type: 3}
-  m_Name: GridFeature
+  m_Script: {fileID: 11500000, guid: 3be1ae6a934f4e8aac5c89e48e44bf6a, type: 3}
+  m_Name: PathFeature
   m_EditorClassIdentifier: 
   m_Active: 1
   _dataTransmitter: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
-  _gridMesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
-  _gridMaterial: {fileID: 2100000, guid: 09030e243e956d849b701ee5d3c25a1c, type: 2}
+  _offsetY: 0.01
+  _pathMesh: {fileID: 1846653201744175015, guid: 2daaaddd1e02a7641b303b30c5f0a35a,
+    type: 3}
+  _selectionMaterial: {fileID: 2100000, guid: 099c9420e34e1a24e9705d7ae1085017, type: 2}
+  _waypointMaterial: {fileID: 2100000, guid: 391246039689ebe48b9c6b6a7d03defa, type: 2}
   _renderPassEvent: 300
+--- !u!114 &6493428911056381617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c61abe976528df446ac9fbd5e82091cd, type: 3}
+  m_Name: OutlineFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _color: {r: 0, g: 0, b: 0, a: 1}
+  _width: 8
+  _renderPassEvent: 450
+  _shaderPassNames: []
