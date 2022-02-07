@@ -45,19 +45,7 @@ public class UnitView: MonoBehaviour, IUnitView
             }
         }
     }
-
-    public void SetEmission(bool emission)
-    {
-        if (emission)
-        {
-            _renderer.sharedMaterial.EnableKeyword("_EMISSION");
-        }
-        else
-        {
-            _renderer.sharedMaterial.DisableKeyword("_EMISSION");
-        }
-    }
-
+    
     public void SetOutline(bool outline)
     {
         _renderer.gameObject.layer = outline ? LayerMask.NameToLayer("Hovered") : LayerMask.NameToLayer("Unit");

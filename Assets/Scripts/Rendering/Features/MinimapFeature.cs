@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class SelectionFeature: ScriptableRendererFeature
+public class MinimapFeature: ScriptableRendererFeature
 {
-    private SelectionPass _pass;
+    private MinimapPass _pass;
     private DataProxy _dataProxy;
     
-    [SerializeField] private Mesh _mesh;
     [SerializeField] private Material _material;
-    [SerializeField, Range(0.01f, 1f)] private float _offset = 0.01f;
+    [SerializeField, Range(0.5f, 1)] private float _pointRadius = 0.5f;
+    [SerializeField, Range(3, 20)] private int _pointSides = 3;
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     
     public override void Create()
     {
-        _pass = new SelectionPass(_material, _mesh, _dataProxy, _offset);
+        _pass = new MinimapPass(_material, _dataProxy, _pointRadius, _pointSides);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -28,8 +28,7 @@ public class SelectionFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
-        return
-            _material && _mesh && _dataProxy && _dataProxy.SelectedUnitView != null;
+        return _material && _dataProxy && _dataProxy.Units != null;
     }
     
     public void OnEnable()

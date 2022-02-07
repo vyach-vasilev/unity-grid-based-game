@@ -7,12 +7,12 @@ public class SeeThoughPass: ScriptableRenderPass
 {
     private readonly string _profilerTag = "SeeThrough Feature";
     private readonly Material _material;
-    private readonly Dictionary<int, UnitView> _views;
+    private readonly Dictionary<UnitModel, UnitView> _units;
     
     public SeeThoughPass(Material material, DataProxy dataProxy)
     {
         _material = material;
-        _views = dataProxy.Units;
+        _units = dataProxy.Units;
     }
     
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -20,14 +20,14 @@ public class SeeThoughPass: ScriptableRenderPass
         var buffer = CommandBufferPool.Get(_profilerTag);
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
-            foreach (var view in _views.Values)
+            foreach (var view in _units.Values)
             {
                 var renderer = view.Renderer;
                 if(renderer == null) return;
                 buffer.DrawRenderer(renderer, _material, 0, 0);
             }
             
-            foreach (var view in _views.Values)
+            foreach (var view in _units.Values)
             {
                 var renderer = view.Renderer;
                 if(renderer == null) return;

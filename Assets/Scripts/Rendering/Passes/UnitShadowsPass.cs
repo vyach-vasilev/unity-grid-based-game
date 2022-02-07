@@ -7,7 +7,7 @@ public class UnitShadowsPass: ScriptableRenderPass
 {
     private readonly string _profilerTag = "UnitShadows Feature";
     private readonly Material _material;
-    private readonly Dictionary<int, UnitView> _views;
+    private readonly Dictionary<UnitModel, UnitView> _units;
     
     public UnitShadowsPass(Material material, DataProxy dataProxy)
     {
@@ -15,7 +15,7 @@ public class UnitShadowsPass: ScriptableRenderPass
             return;
         
         _material = material;
-        _views = dataProxy.Units;
+        _units = dataProxy.Units;
     }
     
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
@@ -25,7 +25,7 @@ public class UnitShadowsPass: ScriptableRenderPass
         {
             var mesh = ResourcesUtilities.GetDefaultPrimitiveMesh(PrimitiveType.Quad);
             
-            foreach (var view in _views.Values)
+            foreach (var view in _units.Values)
             {
                 if (view == null)
                     return;

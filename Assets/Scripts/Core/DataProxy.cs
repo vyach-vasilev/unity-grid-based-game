@@ -6,5 +6,5 @@ public class DataProxy : ScriptableObject
 {
     public IUnitView SelectedUnitView { get; set; }
     public Transform GridTransform { get; set; }
-    public Dictionary<int, UnitView> Units { get; } = new();
+    public Dictionary<UnitModel, UnitView> Units { get; } = new();
 }
