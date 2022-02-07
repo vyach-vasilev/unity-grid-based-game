@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2275463687979184237
+--- !u!114 &-2099268080764624357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: MinimapFeature
   m_EditorClassIdentifier: 
   m_Active: 1
-  _material: {fileID: 2100000, guid: a786f0d8468124145b4da044d039c75f, type: 2}
-  _pointRadius: 0.551
-  _pointSides: 20
+  _friendColor: {r: 0, g: 0.92939353, b: 1, a: 1}
+  _enemyColor: {r: 1, g: 0.22798415, b: 0, a: 1}
+  _pointRadius: 0.5
+  _pointSides: 8
   _renderPassEvent: 1000
 --- !u!114 &11400000
 MonoBehaviour:
@@ -33,8 +34,8 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7,
       type: 3}
   m_RendererFeatures:
-  - {fileID: -2275463687979184237}
-  m_RendererFeatureMap: 934fb3ead4ed6be0
+  - {fileID: -2099268080764624357}
+  m_RendererFeatureMap: 1b62b58dcde6dde2
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 0}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

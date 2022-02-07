@@ -6,19 +6,31 @@ using UnityEngine.Rendering.Universal;
 public class MinimapPass: ScriptableRenderPass
 {
     private readonly string _profilerTag = "Minimap Pass";
-    private readonly Material _material;
     private readonly Dictionary<UnitModel, UnitView> _units;
     private readonly float _pointRadius;
     private readonly int _pointSides;
     
-    public MinimapPass(Material material, DataProxy dataProxy, float pointRadius, int pointSides)
+    private Material _friendMaterial;
+    private Material _enemyMaterial;
+    private Color _friendColor;
+    private Color _enemyColor;
+    private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
+
+    public MinimapPass(DataProxy dataProxy, float pointRadius, int pointSides)
     {
-        _material = material;
         _pointRadius = pointRadius;
         _pointSides = pointSides;
         _units = dataProxy.Units;
     }
 
+    public void Setup(Material friendMaterial, Material enemyMaterial, Color friendColor, Color enemyColor)
+    {
+        _friendMaterial = friendMaterial;
+        _enemyMaterial = enemyMaterial;
+        _friendColor = friendColor;
+        _enemyColor = enemyColor;
+    }
+    
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
     {
         var buffer = CommandBufferPool.Get(_profilerTag);
@@ -36,10 +48,8 @@ public class MinimapPass: ScriptableRenderPass
                 if (view == null || model == null)
                     return;
 
-                _material.SetColor("_BaseColor", model.Type == UnitType.Enemy ? Color.red : Color.green);
-
-                var matrix = Matrix4x4.TRS(view.Position + offset, Quaternion.identity, Vector3.one);
-                buffer.DrawMesh(mesh, matrix, _material);
+                var position = view.Position + offset;
+                DrawMarker(buffer, mesh, position, model.Type);
             }
         }
         
@@ -47,12 +57,11 @@ public class MinimapPass: ScriptableRenderPass
         CommandBufferPool.Release(buffer);
     }
 
-    // private void UpdateMaterialColor()
-    // {
-    //     var _propBlock = new MaterialPropertyBlock();
-    //     var _renderer = GetComponent<Renderer>();
-    //     _renderer.GetPropertyBlock(_propBlock);
-    //     _propBlock.SetColor("_BaseColor", Color.blue);
-    //     _renderer.SetPropertyBlock(_propBlock);
-    // }
+    private void DrawMarker(CommandBuffer buffer, Mesh mesh, Vector3 position, UnitType type)
+    {
+        var material = type == UnitType.Friendly ? _friendMaterial : _enemyMaterial;
+        material.SetColor(BaseColorId, type == UnitType.Friendly ? _friendColor : _enemyColor);
+        var matrix = Matrix4x4.TRS(position, Quaternion.identity, Vector3.one);
+        buffer.DrawMesh(mesh, matrix, material);
+    }
 }

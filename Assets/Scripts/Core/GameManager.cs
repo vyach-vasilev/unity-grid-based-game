@@ -44,9 +44,7 @@ public class GameManager: MonoBehaviour
         if (_dataProxy == null)
             _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
         
-        
         if (_unitsStorage == null)
             _unitsStorage = Resources.Load<UnitsStorage>("GameData/UnitsStorage");
-        
     }
 }

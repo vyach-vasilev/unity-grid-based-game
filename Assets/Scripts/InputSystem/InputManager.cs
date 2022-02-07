@@ -7,6 +7,7 @@ public class InputManager
     public bool CanMove => Input.GetMouseButtonDown(1);
     public bool CanAttack => Input.GetKeyDown(KeyCode.Space);
     public bool DeselectAll => Input.GetKeyDown(KeyCode.Escape);
+    public bool Minimap => Input.GetKeyDown(KeyCode.M);
     
     public static void Initialize()
     {
