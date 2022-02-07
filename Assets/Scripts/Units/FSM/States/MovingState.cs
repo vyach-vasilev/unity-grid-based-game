@@ -11,13 +11,13 @@ public class MovingState: State<UnitController, UnitState>
     }
     public override void Enter(UnitController entity)
     {
-        //Debug.Log("Enter Moving: " + entity.name);
     }
 
     public override void Execute(UnitController entity)
     {
         if (!IsPathValid(entity, out var path))
         {
+            _stateMachine.ChangeState(UnitState.Idle);
             return;
         }
         
@@ -31,7 +31,6 @@ public class MovingState: State<UnitController, UnitState>
 
     public override void Exit(UnitController entity)
     {
-        //Debug.Log("Exit Moving: " + entity.name);
         entity.Animator.SetBool(AnimatorIds.MovingId, false);
     }
 

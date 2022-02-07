@@ -28,7 +28,7 @@ public class IdleState: State<UnitController, UnitState>
             entity.OnMoved(position);
         }
         
-        if (AvailableMove())
+        if (_inputManager.CanMove && AvailableMove(entity))
         {
             _stateMachine.ChangeState(UnitState.Moving);
         }
@@ -42,11 +42,11 @@ public class IdleState: State<UnitController, UnitState>
     {
     }
 
-    private bool AvailableMove()
+    private bool AvailableMove(UnitController entity)
     {
+        var nodePosition = _inputManager.GetWorldNodePosition();
         return
-            _inputManager.CanMove &&
-            _inputManager.GetWorldNodePosition() != Vector3.down && 
+            nodePosition != entity.View.Position && 
             _inputManager.IsWalkableNode();
     }
 }

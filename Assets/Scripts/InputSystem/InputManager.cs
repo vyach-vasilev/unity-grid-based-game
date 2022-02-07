@@ -39,10 +39,8 @@ public class InputManager
         if(Input.GetMouseButtonDown(0))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
             return !Physics.Raycast(ray, out var hit) || !hit.transform.TryGetComponent<IUnitView>(out _);
         }
-
         return false;
     }
     
@@ -55,7 +53,8 @@ public class InputManager
             if (!hit.transform.TryGetComponent<MapController>(out _)) return Vector3.down;
                 
             var point = hit.point;
-            return NodeMap.Instance.NodeFromWorldPoint(point).WorldPosition;
+            var position = NodeMap.Instance.NodeFromWorldPoint(point).WorldPosition;
+            return position;
         }
 
         return Vector3.down;

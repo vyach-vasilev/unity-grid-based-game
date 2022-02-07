@@ -64,6 +64,7 @@ public class UnitPathController
     {
         if (_path.Count <= 0)
         {
+            _isMoving = false;
             return;
         }
         
