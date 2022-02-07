@@ -40,8 +40,6 @@ public class PathFeature: ScriptableRendererFeature
     public void OnEnable()
     {
         if (_dataProxy == null)
-        {
             _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
-        }
     }
 }

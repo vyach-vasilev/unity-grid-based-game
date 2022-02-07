@@ -25,8 +25,7 @@ public class MapController : MonoBehaviour
     private void CheckData()
     {
         if (_dataProxy == null)
-        {
             _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
-        }
+        
     }
 }

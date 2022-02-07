@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class SeeThroughFeature: ScriptableRendererFeature
+public class UnitShadowsFeature: ScriptableRendererFeature
 {
-    private SeeThoughPass _pass;
+    private UnitShadowsPass _pass;
     private Material _material; 
     private DataProxy _dataProxy;
     
@@ -12,11 +11,7 @@ public class SeeThroughFeature: ScriptableRendererFeature
     
     public override void Create()
     {
-        if (_dataProxy == null)
-        {
-            return;
-        }
-        _pass = new SeeThoughPass(_material, _dataProxy);
+        _pass = new UnitShadowsPass(_material, _dataProxy);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -40,7 +35,7 @@ public class SeeThroughFeature: ScriptableRendererFeature
             _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
         
         if(_material == null)
-            _material = CoreUtils.CreateEngineMaterial("Hidden/SeeThrough");    
+            _material = Resources.Load<Material>("Materials/Shadows");
     }
 
     public void OnDisable()

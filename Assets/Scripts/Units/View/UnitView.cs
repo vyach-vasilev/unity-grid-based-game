@@ -22,6 +22,12 @@ public class UnitView: MonoBehaviour, IUnitView
         set => transform.position = value;
     }
     
+    public Vector3 LocalPosition
+    {
+        get => transform.localPosition;
+        set => transform.localPosition = value;
+    }
+    
     public bool Selected
     {
         get => _selected;

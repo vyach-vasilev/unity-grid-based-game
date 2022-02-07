@@ -62,6 +62,11 @@ public class UnitPathController
 
     private async void FollowPath()
     {
+        if (_path.Count <= 0)
+        {
+            return;
+        }
+        
         var currentWaypoint = _path[0];
         while (true)
         {

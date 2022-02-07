@@ -3,14 +3,17 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class SeeThoughPass: ScriptableRenderPass
+public class UnitShadowsPass: ScriptableRenderPass
 {
-    private readonly string _profilerTag = "SeeThrough Feature";
+    private readonly string _profilerTag = "UnitShadows Feature";
     private readonly Material _material;
     private readonly Dictionary<int, UnitView> _views;
     
-    public SeeThoughPass(Material material, DataProxy dataProxy)
+    public UnitShadowsPass(Material material, DataProxy dataProxy)
     {
+        if (dataProxy == null)
+            return;
+        
         _material = material;
         _views = dataProxy.Units;
     }
@@ -20,18 +23,17 @@ public class SeeThoughPass: ScriptableRenderPass
         var buffer = CommandBufferPool.Get(_profilerTag);
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
-            foreach (var view in _views.Values)
-            {
-                var renderer = view.Renderer;
-                if(renderer == null) return;
-                buffer.DrawRenderer(renderer, _material, 0, 0);
-            }
+            var mesh = ResourcesUtilities.GetDefaultPrimitiveMesh(PrimitiveType.Quad);
             
             foreach (var view in _views.Values)
             {
-                var renderer = view.Renderer;
-                if(renderer == null) return;
-                buffer.DrawRenderer(renderer, _material, 0, 1);
+                if (view == null)
+                    return;
+
+                var position = view.Position + Vector3.up * 0.01f;
+                var rotation = Quaternion.Euler(-90, 0, 0);
+                var matrix = Matrix4x4.TRS(position, rotation, Vector3.one);
+                buffer.DrawMesh(mesh, matrix, _material);
             }
         }
         context.ExecuteCommandBuffer(buffer);

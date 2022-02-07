@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public static class MeshExtensions
+public static class MeshUtilities
 {
-    public static Mesh Quad(float width = 1, float height = 1)
+    public static Mesh Quad(this Mesh mesh, float width = 1, float height = 1)
     {
-        var mesh = new Mesh();
+        mesh = new Mesh();
         
         var vertices = new Vector3[] { new(0, 0, 0), new(width, 0, 0), new(0, 0, height), new(width, 0, height) };
         var triangles = new[] { 0, 2, 1, 2, 3, 1 };

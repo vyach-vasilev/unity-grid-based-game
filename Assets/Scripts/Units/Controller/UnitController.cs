@@ -57,9 +57,9 @@ public class UnitController : MonoBehaviour, IUnitController
 
     private void CacheData()
     {
-        if (!_dataProxy.UnitsRenderer.ContainsKey(Model.Owner))
+        if (!_dataProxy.Units.ContainsKey(Model.Owner))
         {
-            _dataProxy.UnitsRenderer.Add(Model.Owner, View.Renderer);
+            _dataProxy.Units.Add(Model.Owner, View);
         }
     }
     

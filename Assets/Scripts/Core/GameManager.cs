@@ -42,13 +42,11 @@ public class GameManager: MonoBehaviour
     private void CheckData()
     {
         if (_dataProxy == null)
-        {
             _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
-        }
+        
         
         if (_unitsStorage == null)
-        {
             _unitsStorage = Resources.Load<UnitsStorage>("GameData/UnitsStorage");
-        }
+        
     }
 }
