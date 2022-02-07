@@ -45,16 +45,12 @@
     public void OnDeselect(object sender, UnitSelectEvent e)
     {
         if (_view != sender || _data.SelectedUnitView != _view) return;
-        
-        View.SetEmission(false);
         _data.SelectedUnitView = null;
     }
 
     public void OnSelect(object sender, UnitSelectEvent e)
     {
         if (_view != sender || _data.SelectedUnitView == _view) return;
-        
-        View.SetEmission(true);
         _data.SelectedUnitView = _view;
     }
     

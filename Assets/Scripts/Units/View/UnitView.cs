@@ -22,10 +22,10 @@ public class UnitView: MonoBehaviour, IUnitView
         set => transform.position = value;
     }
     
-    public Vector3 LocalPosition
+    public Quaternion Rotation
     {
-        get => transform.localPosition;
-        set => transform.localPosition = value;
+        get => transform.rotation;
+        set => transform.rotation = value;
     }
     
     public bool Selected
