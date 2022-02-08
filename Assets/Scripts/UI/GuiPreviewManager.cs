@@ -28,6 +28,9 @@ public class GuiPreviewManager : MonoBehaviour
     {
         if (InputManager.Instance.TrySelectUnit<UnitController>(out var unit))
         {
+            if (unit == null)
+                return;
+
             var currentPreview = _unitPreviews.Find(u => u.Type == unit.Model.Type);
             var otherPreview = _unitPreviews.Find(u => u.Type != unit.Model.Type);
             currentPreview.gameObject.SetActive(true);
