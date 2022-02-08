@@ -2,14 +2,18 @@
 
 public class HUDManager: MonoBehaviour
 {
+    [SerializeField] private DataProxy _dataProxy;
     [SerializeField] private Camera _minimapCamera;
     [SerializeField] private GameObject _minimapOverlay;
+    [SerializeField] private GameObject _unitPreview;
+    [SerializeField] private Camera _previewCamera;
     
     private void Update()
     {
         MinimapHandler();
+        UnitPreviewHandler();
     }
-
+    
     private void MinimapHandler()
     {
         if (InputManager.Instance.Minimap)
@@ -24,6 +28,20 @@ public class HUDManager: MonoBehaviour
                 _minimapCamera.gameObject.SetActive(true);
                 _minimapOverlay.SetActive(true);
             }
+        }
+    }
+    
+    private void UnitPreviewHandler()
+    {
+        if (_dataProxy.SelectedUnitView != null && !_unitPreview.activeSelf)
+        {
+            _previewCamera.gameObject.SetActive(true);
+            _unitPreview.SetActive(true);
+        }
+        else if(_dataProxy.SelectedUnitView == null && _unitPreview.activeSelf)
+        {
+            _previewCamera.gameObject.SetActive(false);
+            _unitPreview.SetActive(false);
         }
     }
 }

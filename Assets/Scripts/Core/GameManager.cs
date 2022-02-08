@@ -7,11 +7,12 @@ public class GameManager: MonoBehaviour
 
     [SerializeField] private UnitsStorage _unitsStorage;
     [SerializeField] private DataProxy _dataProxy;
+    [SerializeField] private KeyBindings _keyBindings;
     
     private void Awake()
     { 
-        CheckData();
-        InputManager.Initialize();
+        PrepareData();
+        InputManager.Initialize(_keyBindings);
         foreach (var unitData in _unitsStorage.UnitDataList)
         {
             CreateUnits(unitData);
@@ -39,12 +40,15 @@ public class GameManager: MonoBehaviour
         unitController.Subscribe();
     }
 
-    private void CheckData()
+    private void PrepareData()
     {
         if (_dataProxy == null)
             _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
         
         if (_unitsStorage == null)
             _unitsStorage = Resources.Load<UnitsStorage>("GameData/UnitsStorage");
+        
+        if (_keyBindings == null)
+            _keyBindings = Resources.Load<KeyBindings>("GameData/KeyBindings");
     }
 }

@@ -3,44 +3,49 @@
 public class InputManager
 {
     public static InputManager Instance;
+
+    private static KeyBindings _keyBindings;
     
-    public bool CanMove => Input.GetMouseButtonDown(1);
-    public bool CanAttack => Input.GetKeyDown(KeyCode.Space);
-    public bool DeselectAll => Input.GetKeyDown(KeyCode.Escape);
-    public bool Minimap => Input.GetKeyDown(KeyCode.M);
+    public bool Select => Input.GetKeyDown(_keyBindings.Select);
+    public bool MoveAction => Input.GetKeyDown(_keyBindings.Action);
+    public bool PrepareToAttack => Input.GetKeyDown(_keyBindings.PrepareToAttack);
+    public bool Deselect => Input.GetKeyDown(_keyBindings.Deselect);
+    public bool Minimap => Input.GetKeyDown(_keyBindings.Minimap);
+    public bool Highlight => Input.GetKeyDown(_keyBindings.Highlighting);
     
-    public static void Initialize()
+    public static void Initialize(KeyBindings keyBindings)
     {
         Instance = new InputManager();
+        _keyBindings = keyBindings;
     }
 
-    public IUnitView OnUnitHover()
+    public T OnUnitHover<T>() where T : class
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        return Physics.Raycast(ray, out var hit) ? hit.transform.GetComponent<IUnitView>() : null;
+        return Physics.Raycast(ray, out var hit) ? hit.transform.GetComponent<T>() : null;
     }
     
-    public bool TrySelectUnit(out IUnitView selectedUnit)
+    public bool TrySelectUnit<T>(out T selectedUnit)
     {
         selectedUnit = default;
-        if (Input.GetMouseButtonDown(0))
+        if (Select)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
             {
-                selectedUnit = hit.transform.GetComponent<IUnitView>();
+                selectedUnit = hit.transform.GetComponent<T>();
                 return true;
             }
         }
         return false;
     }
 
-    public bool IsNeedDeselect()
+    public bool IsNeedDeselect<T>()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Select)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            return !Physics.Raycast(ray, out var hit) || !hit.transform.TryGetComponent<IUnitView>(out _);
+            return !Physics.Raycast(ray, out var hit) || !hit.transform.TryGetComponent<T>(out _);
         }
         return false;
     }
@@ -48,7 +53,6 @@ public class InputManager
     public Vector3 GetWorldNodePosition()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
         if (Physics.Raycast(ray, out var hit))
         {
             if (!hit.transform.TryGetComponent<MapController>(out _)) return Vector3.down;
@@ -57,7 +61,6 @@ public class InputManager
             var position = NodeMap.Instance.NodeFromWorldPoint(point).WorldPosition;
             return position;
         }
-
         return Vector3.down;
     }
 

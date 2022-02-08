@@ -1,1 +1,1 @@
-﻿public class UnitSelectEvent: System.EventArgs {}
+﻿public class UnitSelectionEvent: System.EventArgs {}

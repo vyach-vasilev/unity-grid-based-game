@@ -6,8 +6,8 @@ public class UnitView: MonoBehaviour, IUnitView
     private bool _selected;
     private Renderer _renderer;
     
-    public event EventHandler<UnitSelectEvent> OnSelect = (_, _) => {};
-    public event EventHandler<UnitSelectEvent> OnDeselect = (_, _) => {};
+    public event EventHandler<UnitSelectionEvent> OnSelect = (_, _) => {};
+    public event EventHandler<UnitSelectionEvent> OnDeselect = (_, _) => {};
 
     public Renderer Renderer => _renderer;
     
@@ -34,7 +34,7 @@ public class UnitView: MonoBehaviour, IUnitView
         set
         {
             _selected = value;
-            var evt = new UnitSelectEvent();
+            var evt = new UnitSelectionEvent();
             if (_selected)
             {
                 OnSelect.Invoke(this, evt);

@@ -2,6 +2,6 @@
 
 public interface ISelectable
 {
-    event EventHandler<UnitSelectEvent> OnSelect;
-    event EventHandler<UnitSelectEvent> OnDeselect;
+    event EventHandler<UnitSelectionEvent> OnSelect;
+    event EventHandler<UnitSelectionEvent> OnDeselect;
 }

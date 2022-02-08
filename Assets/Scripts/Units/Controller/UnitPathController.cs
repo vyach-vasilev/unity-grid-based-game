@@ -52,7 +52,7 @@ public class UnitPathController
                 return;
             }
 
-            if (InputManager.Instance.CanMove)
+            if (InputManager.Instance.MoveAction)
             {
                 _isMoving = true;
                 FollowPath();

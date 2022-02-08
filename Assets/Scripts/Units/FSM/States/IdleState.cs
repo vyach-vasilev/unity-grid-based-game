@@ -21,18 +21,18 @@ public class IdleState: State<UnitController, UnitState>
 
         if (!entity.View.Selected) return;
 
-        if(!_inputManager.CanAttack)
+        if(!_inputManager.PrepareToAttack)
         {
             //TODO: режими переключения сетки (moving / attack)
             var position = _inputManager.GetWorldNodePosition();
             entity.OnMoved(position);
         }
         
-        if (_inputManager.CanMove && AvailableMove(entity))
+        if (_inputManager.MoveAction && AvailableMove(entity))
         {
             _stateMachine.ChangeState(UnitState.Moving);
         }
-        else if (_inputManager.CanAttack)
+        else if (_inputManager.PrepareToAttack)
         {
             _stateMachine.ChangeState(UnitState.Attack);
         }
