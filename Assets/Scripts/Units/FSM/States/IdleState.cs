@@ -17,7 +17,7 @@ public class IdleState: State<UnitController, UnitState>
 
     public override void Execute(UnitController entity)
     {
-        if (entity.View != (UnitView)entity.DataProxy.SelectedUnitView) return;
+        if (entity.View != (UnitView)entity.DataProvider.SelectedUnitView) return;
 
         if (!entity.View.Selected) return;
 

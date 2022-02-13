@@ -9,13 +9,13 @@ public class UnitShadowsPass: ScriptableRenderPass
     private readonly Material _material;
     private readonly Dictionary<UnitModel, UnitView> _units;
     
-    public UnitShadowsPass(Material material, DataProxy dataProxy)
+    public UnitShadowsPass(Material material, DataProvider dataProvider)
     {
-        if (dataProxy == null)
+        if (dataProvider == null)
             return;
         
         _material = material;
-        _units = dataProxy.Units;
+        _units = dataProvider.Units;
     }
     
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)

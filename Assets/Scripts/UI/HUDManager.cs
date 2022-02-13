@@ -2,7 +2,7 @@
 
 public class HUDManager: MonoBehaviour
 {
-    [SerializeField] private DataProxy _dataProxy;
+    [SerializeField] private DataProvider dataProvider;
     [SerializeField] private Camera _minimapCamera;
     [SerializeField] private GameObject _minimapOverlay;
     [SerializeField] private GameObject _unitPreview;
@@ -33,12 +33,12 @@ public class HUDManager: MonoBehaviour
     
     private void UnitPreviewHandler()
     {
-        if (_dataProxy.SelectedUnitView != null && !_unitPreview.activeSelf)
+        if (dataProvider.SelectedUnitView != null && !_unitPreview.activeSelf)
         {
             _previewCamera.gameObject.SetActive(true);
             _unitPreview.SetActive(true);
         }
-        else if(_dataProxy.SelectedUnitView == null && _unitPreview.activeSelf)
+        else if(dataProvider.SelectedUnitView == null && _unitPreview.activeSelf)
         {
             _previewCamera.gameObject.SetActive(false);
             _unitPreview.SetActive(false);

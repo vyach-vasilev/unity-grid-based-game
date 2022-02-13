@@ -8,14 +8,14 @@ public class SelectionPass: ScriptableRenderPass
 
     private readonly Material _material;
     private readonly Mesh _mesh;
-    private readonly DataProxy _dataProxy;
+    private readonly DataProvider _dataProvider;
     private readonly float _offset;
     
-    public SelectionPass(Material material, Mesh mesh, DataProxy dataProxy, float offset)
+    public SelectionPass(Material material, Mesh mesh, DataProvider dataProvider, float offset)
     {
         _material = material;
         _mesh = mesh;
-        _dataProxy = dataProxy;
+        _dataProvider = dataProvider;
         _offset = offset;
     }
 
@@ -24,11 +24,11 @@ public class SelectionPass: ScriptableRenderPass
         var buffer = CommandBufferPool.Get(_profilerTag);
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
-            if (_dataProxy.SelectedUnitView is not { Selected: true })
+            if (_dataProvider.SelectedUnitView is not { Selected: true })
             {
                 return;
             }
-            var unit = (UnitView)_dataProxy.SelectedUnitView;
+            var unit = (UnitView)_dataProvider.SelectedUnitView;
 
             if (unit == null)
             {

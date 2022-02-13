@@ -9,6 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b900bc6c15ba4bb2b0d4596604acaef0, type: 3}
-  m_Name: DataProxy
+  m_Script: {fileID: 11500000, guid: 03e793d4438544169a3c5e2e15ae9e4a, type: 3}
+  m_Name: Map Data
   m_EditorClassIdentifier: 
+  _unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 68
+  _nodeRadius: 0.5
+  _size: {x: 10, y: 10}

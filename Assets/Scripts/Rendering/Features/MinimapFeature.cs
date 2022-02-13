@@ -7,7 +7,7 @@ public class MinimapFeature: ScriptableRendererFeature
     private static readonly int SurfaceId = Shader.PropertyToID("_Surface");
 
     private MinimapPass _pass;
-    private DataProxy _dataProxy;
+    private DataProvider _dataProvider;
     private Material _friendMaterial;
     private Material _enemyMaterial;
     
@@ -20,10 +20,10 @@ public class MinimapFeature: ScriptableRendererFeature
 
     public override void Create()
     {
-        if(_dataProxy == null)
+        if(_dataProvider == null)
             return;
         
-        _pass = new MinimapPass(_dataProxy, _pointRadius, _pointSides);
+        _pass = new MinimapPass(_dataProvider, _pointRadius, _pointSides);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -39,13 +39,13 @@ public class MinimapFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
-        return _friendMaterial && _enemyMaterial && _dataProxy && _dataProxy.Units != null;
+        return _friendMaterial && _enemyMaterial && _dataProvider && _dataProvider.Units != null;
     }
     
     public void OnEnable()
     {
-        if (_dataProxy == null)
-            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        if (_dataProvider == null)
+            _dataProvider = Resources.Load<DataProvider>("GameData/DataProxy");
 
         if (_friendMaterial == null)
         {

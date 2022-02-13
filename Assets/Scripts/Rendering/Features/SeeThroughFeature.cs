@@ -6,17 +6,17 @@ public class SeeThroughFeature: ScriptableRendererFeature
 {
     private SeeThoughPass _pass;
     private Material _material; 
-    private DataProxy _dataProxy;
+    private DataProvider _dataProvider;
     
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     
     public override void Create()
     {
-        if (_dataProxy == null)
+        if (_dataProvider == null)
         {
             return;
         }
-        _pass = new SeeThoughPass(_material, _dataProxy);
+        _pass = new SeeThoughPass(_material, _dataProvider);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -31,13 +31,13 @@ public class SeeThroughFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
-        return _dataProxy && _material && _dataProxy.Units is { Count: > 0 };
+        return _dataProvider && _material && _dataProvider.Units is { Count: > 0 };
     }
     
     public void OnEnable()
     {
-        if (_dataProxy == null)
-            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        if (_dataProvider == null)
+            _dataProvider = Resources.Load<DataProvider>("GameData/DataProxy");
         
         if(_material == null)
             _material = CoreUtils.CreateEngineMaterial("Hidden/SeeThrough");    

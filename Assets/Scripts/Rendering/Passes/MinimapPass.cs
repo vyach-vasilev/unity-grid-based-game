@@ -16,11 +16,11 @@ public class MinimapPass: ScriptableRenderPass
     private Color _enemyColor;
     private static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
 
-    public MinimapPass(DataProxy dataProxy, float pointRadius, int pointSides)
+    public MinimapPass(DataProvider dataProvider, float pointRadius, int pointSides)
     {
         _pointRadius = pointRadius;
         _pointSides = pointSides;
-        _units = dataProxy.Units;
+        _units = dataProvider.Units;
     }
 
     public void Setup(Material friendMaterial, Material enemyMaterial, Color friendColor, Color enemyColor)

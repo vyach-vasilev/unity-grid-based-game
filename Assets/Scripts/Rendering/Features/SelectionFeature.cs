@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal;
 public class SelectionFeature: ScriptableRendererFeature
 {
     private SelectionPass _pass;
-    private DataProxy _dataProxy;
+    private DataProvider _dataProvider;
     
     [SerializeField] private Mesh _mesh;
     [SerializeField] private Material _material;
@@ -13,7 +13,7 @@ public class SelectionFeature: ScriptableRendererFeature
     
     public override void Create()
     {
-        _pass = new SelectionPass(_material, _mesh, _dataProxy, _offset);
+        _pass = new SelectionPass(_material, _mesh, _dataProvider, _offset);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -29,12 +29,12 @@ public class SelectionFeature: ScriptableRendererFeature
     private bool IsValid()
     {
         return
-            _material && _mesh && _dataProxy && _dataProxy.SelectedUnitView != null;
+            _material && _mesh && _dataProvider && _dataProvider.SelectedUnitView != null;
     }
     
     public void OnEnable()
     {
-        if (_dataProxy == null)
-            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        if (_dataProvider == null)
+            _dataProvider = Resources.Load<DataProvider>("GameData/DataProxy");
     }
 }

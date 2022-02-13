@@ -6,16 +6,15 @@ public class GridFeature: ScriptableRendererFeature
 {
     private GridPass _pass;
     private Material _material;
-    private DataProxy _dataProxy;
-    
+
+    [SerializeField] private MapData _mapData;
     [SerializeField] private Color _color;
-    [SerializeField] private Vector2Int _tiling = new(10, 10);
     [SerializeField, Range(0,1)] private float _thickness = 0.95f;
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     
     public override void Create()
     {
-        _pass = new GridPass(_color, _tiling, _thickness, _material, _dataProxy);
+        _pass = new GridPass(_color, _thickness, _material, _mapData);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -30,13 +29,13 @@ public class GridFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
-        return _dataProxy && _dataProxy.GridTransform &&_material;
+        return _mapData && _mapData.Transform &&_material;
     }
 
     private void OnEnable()
     {
-        if (_dataProxy == null)
-            _dataProxy = Resources.Load<DataProxy>("GameData/DataProxy");
+        if (_mapData == null)
+            _mapData = Resources.Load<MapData>("GameData/MapData");
         
         if(_material == null)
             _material = CoreUtils.CreateEngineMaterial("Shader Graphs/Grid");

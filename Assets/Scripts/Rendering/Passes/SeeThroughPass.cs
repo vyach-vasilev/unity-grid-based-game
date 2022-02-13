@@ -9,10 +9,10 @@ public class SeeThoughPass: ScriptableRenderPass
     private readonly Material _material;
     private readonly Dictionary<UnitModel, UnitView> _units;
     
-    public SeeThoughPass(Material material, DataProxy dataProxy)
+    public SeeThoughPass(Material material, DataProvider dataProvider)
     {
         _material = material;
-        _units = dataProxy.Units;
+        _units = dataProvider.Units;
     }
     
     public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)

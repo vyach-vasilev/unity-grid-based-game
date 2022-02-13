@@ -1258,12 +1258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cccb15313c1aab4fa4d6c84f83d05d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 68
-  _nodeRadius: 0.5
-  _mapSize: {x: 10, y: 10}
-  _dataProxy: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _mapData: {fileID: 11400000, guid: e84906d7bda877e4b9514d1bcb255e2c, type: 2}
+  _dataProvider: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
 --- !u!1 &792063455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,7 +1675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitsStorage: {fileID: 11400000, guid: f9439f70b0944154c894f34dac323b0d, type: 2}
-  _dataProxy: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _dataProvider: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
   _keyBindings: {fileID: 11400000, guid: acf7883975b097e42b5e6fb270e1ee28, type: 2}
 --- !u!4 &1458518240
 Transform:
@@ -1708,7 +1704,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3646e3cb68ac4b2b9c1d6a2c022c2ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataProxy: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  dataProvider: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
   _minimapCamera: {fileID: 1883509810}
   _minimapOverlay: {fileID: 1997547890}
   _unitPreview: {fileID: 338736295}

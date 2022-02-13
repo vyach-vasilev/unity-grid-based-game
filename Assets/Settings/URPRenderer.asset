@@ -30,8 +30,8 @@ MonoBehaviour:
   m_Name: GridFeature
   m_EditorClassIdentifier: 
   m_Active: 1
+  _mapData: {fileID: 11400000, guid: e84906d7bda877e4b9514d1bcb255e2c, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
-  _tiling: {x: 10, y: 10}
   _thickness: 0.95
   _renderPassEvent: 300
 --- !u!114 &11400000
