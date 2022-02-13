@@ -2,11 +2,11 @@
 {
     public IUnitController Controller { get; private set; }
     
-    public UnitControllerFactory(IUnitModel model, IUnitView view)
+    public UnitControllerFactory(IUnitModel model, IUnitView view, DataProvider dataProvider)
     {
         var unit = (UnitView)view;
         var controllerExist = unit.gameObject.TryGetComponent<UnitController>(out var controller);
         Controller = controllerExist ? controller : unit.gameObject.AddComponent<UnitController>();
-        Controller.Initialize(model, view);
+        Controller.Initialize(model, view, dataProvider);
     }
 }

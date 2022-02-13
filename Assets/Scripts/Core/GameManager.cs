@@ -2,42 +2,44 @@
 
 public class GameManager: MonoBehaviour
 {
-    private MapController _mapController;
     private InputManager _inputManager;
 
-    [SerializeField] private UnitsStorage _unitsStorage;
     [SerializeField] private DataProvider _dataProvider;
+    [SerializeField] private MapData _mapData;
+    [SerializeField] private UnitsStorage _unitsStorage;
     [SerializeField] private KeyBindings _keyBindings;
     
+    [Space]
+    [SerializeField] private MapController _mapController;
     private void Awake()
     { 
         PrepareData();
         InputManager.Initialize(_keyBindings);
-        foreach (var unitData in _unitsStorage.UnitDataList)
-        {
-            CreateUnits(unitData);
-        }
+        _mapController.Initialize(_mapData);
+        InitializeUnits();
     }
     
-    private void CreateUnits(UnitData unitData)
+    private void InitializeUnits()
     {
-        var modelFactory = new UnitModelFactory();
-        var unitModel = (UnitModel)modelFactory.Model;
+        foreach (var unitData in _unitsStorage.UnitDataList)
+        {
+            var modelFactory = new UnitModelFactory();
+            var unitModel = (UnitModel)modelFactory.Model;
 
-        unitModel.Name = unitData.Name;
-        unitModel.Type = unitData.Type;
-        unitModel.Position = unitData.Position;
-        
-        var viewFactory = new UnitViewFactory(unitData.Unit, unitModel.Type);
-        var unitView = (UnitView)viewFactory.View;
+            unitModel.Name = unitData.Name;
+            unitModel.Type = unitData.Type;
+            unitModel.Position = unitData.Position;
 
-        unitView.gameObject.name = unitModel.Name;
+            var viewFactory = new UnitViewFactory(unitData.Unit);
+            var unitView = (UnitView)viewFactory.View;
 
-        var controllerFactory = new UnitControllerFactory(unitModel, unitView);
-        var unitController = (UnitController)controllerFactory.Controller;
-        unitController.transform.position = unitModel.Position;
-        unitController.SetData(_dataProvider);
-        unitController.Subscribe();
+            unitView.gameObject.name = unitModel.Name;
+
+            var controllerFactory = new UnitControllerFactory(unitModel, unitView, _dataProvider);
+            var unitController = (UnitController)controllerFactory.Controller;
+            unitController.transform.position = unitModel.Position;
+            unitController.Subscribe();
+        }
     }
 
     private void PrepareData()
@@ -45,10 +47,13 @@ public class GameManager: MonoBehaviour
         if (_dataProvider == null)
             _dataProvider = Resources.Load<DataProvider>("GameData/DataProxy");
         
+        if (_mapData == null)
+            _mapData = Resources.Load<MapData>("GameData/Map/MapData");
+        
         if (_unitsStorage == null)
-            _unitsStorage = Resources.Load<UnitsStorage>("GameData/UnitsStorage");
+            _unitsStorage = Resources.Load<UnitsStorage>("GameData/Units/UnitsStorage");
         
         if (_keyBindings == null)
-            _keyBindings = Resources.Load<KeyBindings>("GameData/KeyBindings");
+            _keyBindings = Resources.Load<KeyBindings>("GameData/Input/KeyBindings");
     }
 }

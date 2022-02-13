@@ -1146,8 +1146,8 @@ GameObject:
   - component: {fileID: 608301766}
   - component: {fileID: 608301765}
   - component: {fileID: 608301764}
-  - component: {fileID: 608301771}
   - component: {fileID: 608301769}
+  - component: {fileID: 608301770}
   m_Layer: 0
   m_Name: MapField
   m_TagString: Untagged
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3773da0794ec49369db6c3b97df96ba5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &608301771
+--- !u!114 &608301770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1258,8 +1258,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cccb15313c1aab4fa4d6c84f83d05d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapData: {fileID: 11400000, guid: e84906d7bda877e4b9514d1bcb255e2c, type: 2}
-  _dataProvider: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
 --- !u!1 &792063455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,9 +1672,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c9e7aae051c408e9876b7d803b15273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unitsStorage: {fileID: 11400000, guid: f9439f70b0944154c894f34dac323b0d, type: 2}
   _dataProvider: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
+  _mapData: {fileID: 11400000, guid: e84906d7bda877e4b9514d1bcb255e2c, type: 2}
+  _unitsStorage: {fileID: 11400000, guid: f9439f70b0944154c894f34dac323b0d, type: 2}
   _keyBindings: {fileID: 11400000, guid: acf7883975b097e42b5e6fb270e1ee28, type: 2}
+  _mapController: {fileID: 608301770}
 --- !u!4 &1458518240
 Transform:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class MinimapPass: ScriptableRenderPass
 {
     private readonly string _profilerTag = "Minimap Pass";
-    private readonly Dictionary<UnitModel, UnitView> _units;
+    private readonly List<UnitController> _units;
     private readonly float _pointRadius;
     private readonly int _pointSides;
     
@@ -42,8 +42,8 @@ public class MinimapPass: ScriptableRenderPass
             
             foreach (var unit in _units)
             {
-                var view = unit.Value;
-                var model = unit.Key;
+                var view = unit.View;
+                var model = unit.Model;
                 
                 if (view == null || model == null)
                     return;

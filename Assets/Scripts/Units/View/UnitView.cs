@@ -22,12 +22,6 @@ public class UnitView: MonoBehaviour, IUnitView
         set => transform.position = value;
     }
     
-    public Quaternion Rotation
-    {
-        get => transform.rotation;
-        set => transform.rotation = value;
-    }
-    
     public bool Selected
     {
         get => _selected;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class UnitController : MonoBehaviour, IUnitController
 {
@@ -22,27 +23,23 @@ public class UnitController : MonoBehaviour, IUnitController
     public bool InMove => _pathController.IsMoving;
     public bool InAttack { get; set; }
     
-    public void Initialize(IUnitModel model, IUnitView view)
+    public void Initialize(IUnitModel model, IUnitView view, DataProvider dataProvider)
     {
         _model = model;
         _view = view;
         
-        _pathController = new UnitPathController(this, transform, _movementSpeed);
-        _selectionController = new UnitSelectionController(_view);
-        _fsmController = new FSMController(this);
+        _dataProvider = dataProvider;
         
-        _view.Position = _model.Position;
+        if (!_dataProvider.Units.Contains(this))
+            _dataProvider.Units.Add(this);
+        
+        _pathController = new UnitPathController(this, transform, _movementSpeed);
+        _selectionController = new UnitSelectionController(_view, _dataProvider);
+        _fsmController = new FSMController(this);
     }
     
     public void OnMoved(Vector3 destination) => _pathController.OnMoved(destination);
     
-    public void SetData(DataProvider dataProvider)
-    {
-        _dataProvider = dataProvider;
-        CacheData();
-        _selectionController.SetTransferData(_dataProvider);
-    }
-
     public void Subscribe()
     {
         _view.OnSelect += _selectionController.OnSelect;
@@ -53,14 +50,6 @@ public class UnitController : MonoBehaviour, IUnitController
     {
         _view.OnSelect -= _selectionController.OnSelect;
         _view.OnDeselect -= _selectionController.OnDeselect;
-    }
-
-    private void CacheData()
-    {
-        if (!_dataProvider.Units.ContainsKey(Model))
-        {
-            _dataProvider.Units.Add(Model, View);
-        }
     }
     
     private void OnMouseDown()

@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class Pathfinder: MonoBehaviour
+public class Pathfinder
 {
-    private NodeMap _map;
-    private PathRequestManager _pathRequestManager;
+    private readonly NodeMap _map;
+    private readonly PathRequestManager _pathRequestManager;
 
-    public void Setup(NodeMap map)
+    public static void Create(NodeMap map) => new Pathfinder(map);
+    
+    private Pathfinder(NodeMap map)
     {
         _map = map;
         _pathRequestManager = new PathRequestManager(this);
@@ -66,7 +68,7 @@ public class Pathfinder: MonoBehaviour
     {
         var path = new List<Node>();
         var currentNode = endNode;
-        // прокинуть offset в waypoint или сделать 2d vector? Как бороться с nullable?
+
         while (currentNode != startNode)
         {
             path.Add(currentNode);

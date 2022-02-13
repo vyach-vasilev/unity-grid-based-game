@@ -5,5 +5,5 @@ using UnityEngine;
 public class DataProvider : ScriptableObject
 {
     public IUnitView SelectedUnitView { get; set; }
-    public Dictionary<UnitModel, UnitView> Units { get; } = new();
+    public List<UnitController> Units { get; } = new();
 }

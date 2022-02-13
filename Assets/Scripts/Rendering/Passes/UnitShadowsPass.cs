@@ -7,7 +7,7 @@ public class UnitShadowsPass: ScriptableRenderPass
 {
     private readonly string _profilerTag = "UnitShadows Feature";
     private readonly Material _material;
-    private readonly Dictionary<UnitModel, UnitView> _units;
+    private readonly List<UnitController> _units;
     
     public UnitShadowsPass(Material material, DataProvider dataProvider)
     {
@@ -25,12 +25,12 @@ public class UnitShadowsPass: ScriptableRenderPass
         {
             var mesh = ResourcesUtilities.GetDefaultPrimitiveMesh(PrimitiveType.Quad);
             
-            foreach (var view in _units.Values)
+            foreach (var unit in _units)
             {
-                if (view == null)
+                if (unit == null)
                     return;
 
-                var position = view.Position + Vector3.up * 0.01f;
+                var position = unit.View.Position + Vector3.up * 0.01f;
                 var rotation = Quaternion.Euler(-90, 0, 0);
                 var matrix = Matrix4x4.TRS(position, rotation, Vector3.one);
                 buffer.DrawMesh(mesh, matrix, _material);

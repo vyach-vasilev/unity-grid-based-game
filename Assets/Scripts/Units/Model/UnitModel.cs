@@ -34,8 +34,6 @@ public class UnitModel: IUnitModel
         get => _type;
         set => _type = value;
     }
-
-    public int Owner => GetHashCode();
     
     public UnitModel(): this(default, UnitType.Friendly)
     {

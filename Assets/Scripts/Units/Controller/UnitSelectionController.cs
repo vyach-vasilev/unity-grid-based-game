@@ -2,19 +2,15 @@
 {
     private readonly InputManager _inputManager;
     private readonly IUnitView _view;
-
-    private DataProvider _data;
+    private readonly DataProvider _dataProvider;
+    
     private UnitView View => (UnitView)_view;
 
-    public UnitSelectionController(IUnitView view)
+    public UnitSelectionController(IUnitView view, DataProvider dataProvider)
     {
         _inputManager = InputManager.Instance;
         _view = view;
-    }
-
-    public void SetTransferData(DataProvider data)
-    {
-        _data = data;
+        _dataProvider = dataProvider;
     }
     
     public void Select()
@@ -44,21 +40,21 @@
 
     public void OnDeselect(object sender, UnitSelectionEvent e)
     {
-        if (_view != sender || _data.SelectedUnitView != _view) return;
-        _data.SelectedUnitView = null;
+        if (_view != sender || _dataProvider.SelectedUnitView != _view) return;
+        _dataProvider.SelectedUnitView = null;
     }
 
     public void OnSelect(object sender, UnitSelectionEvent e)
     {
-        if (_view != sender || _data.SelectedUnitView == _view) return;
-        _data.SelectedUnitView = _view;
+        if (_view != sender || _dataProvider.SelectedUnitView == _view) return;
+        _dataProvider.SelectedUnitView = _view;
     }
     
     private void TryDeselect()
     {
-        if (!_view.Selected && _data.SelectedUnitView == null) return;
+        if (!_view.Selected && _dataProvider.SelectedUnitView == null) return;
         
-        _data.SelectedUnitView.Selected = false;
+        _dataProvider.SelectedUnitView.Selected = false;
         _view.Selected = false;
     }
 }

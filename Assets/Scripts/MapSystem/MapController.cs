@@ -1,26 +1,11 @@
 using UnityEngine;
 
-public class MapController : MonoBehaviour
+public class MapController: MonoBehaviour
 {
-    private NodeMap _map;
-    private Pathfinder _pathfinder;
-    private PathRequestManager _pathRequestManager;
-
-    [SerializeField] private MapData _mapData;
-
-    private void Awake()
+    public void Initialize(MapData mapData)
     {
-        CheckData();
-        NodeMap.Create(_mapData.Size, transform.position, _mapData.NodeRadius, _mapData.UnwalkableMask);
-        _pathfinder = gameObject.AddComponent<Pathfinder>();
-        _pathfinder.Setup(NodeMap.Instance);
-        _mapData.Transform = transform;
-    }
-    
-    private void CheckData()
-    {
-        if (_mapData == null)
-            _mapData = Resources.Load<MapData>("GameData/MapData");
-        
+        NodeMap.Create(mapData.Size, transform.position, mapData.NodeRadius, mapData.UnwalkableMask);
+        Pathfinder.Create(NodeMap.Instance);
+        mapData.Transform = transform;
     }
 }
