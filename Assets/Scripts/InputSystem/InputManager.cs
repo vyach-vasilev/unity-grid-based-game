@@ -11,7 +11,7 @@ public class InputManager
     public bool PrepareToAttack => Input.GetKeyDown(_keyBindings.PrepareToAttack);
     public bool Deselect => Input.GetKeyDown(_keyBindings.Deselect);
     public bool Minimap => Input.GetKeyDown(_keyBindings.Minimap);
-    public bool Highlight => Input.GetKeyDown(_keyBindings.Highlighting);
+    public bool Highlight => Input.GetKey(_keyBindings.Highlighting);
     
     public static void Initialize(KeyBindings keyBindings)
     {

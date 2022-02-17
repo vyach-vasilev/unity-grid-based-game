@@ -34,6 +34,22 @@ MonoBehaviour:
   _color: {r: 1, g: 1, b: 1, a: 1}
   _thickness: 0.95
   _renderPassEvent: 300
+--- !u!114 &-2300793928224908606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08a4668b2a02479bbdbe87c23ce915aa, type: 3}
+  m_Name: FractionColorFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  _friendColor: {r: 0, g: 1, b: 0, a: 1}
+  _enemyColor: {r: 1, g: 0, b: 0, a: 1}
+  _renderPassEvent: 300
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56,7 +72,8 @@ MonoBehaviour:
   - {fileID: 5506351276870150447}
   - {fileID: 3443990220319738747}
   - {fileID: -7774267162158444746}
-  m_RendererFeatureMap: 12232ce8f1032f9c6a444862b9b44047b166c4e1304b1d5a2f295dfa4f7d6a4c7bcb13bcdb82cb2f36cf8fb234411c94
+  - {fileID: -2300793928224908606}
+  m_RendererFeatureMap: 12232ce8f1032f9c6a444862b9b44047b166c4e1304b1d5a2f295dfa4f7d6a4c7bcb13bcdb82cb2f36cf8fb234411c94c25ac7c61cf011e0
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
