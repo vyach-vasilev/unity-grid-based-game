@@ -35,6 +35,6 @@ public class SelectionFeature: ScriptableRendererFeature
     public void OnEnable()
     {
         if (_dataProvider == null)
-            _dataProvider = Resources.Load<DataProvider>("GameData/DataProxy");
+            _dataProvider = Resources.Load<DataProvider>("GameData/DataProvider");
     }
 }

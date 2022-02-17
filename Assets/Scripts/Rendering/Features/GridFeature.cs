@@ -35,7 +35,7 @@ public class GridFeature: ScriptableRendererFeature
     private void OnEnable()
     {
         if (_mapData == null)
-            _mapData = Resources.Load<MapData>("GameData/MapData");
+            _mapData = Resources.Load<MapData>("GameData/Map/MapData");
         
         if(_material == null)
             _material = CoreUtils.CreateEngineMaterial("Shader Graphs/Grid");

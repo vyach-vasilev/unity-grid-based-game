@@ -45,7 +45,7 @@ public class GameManager: MonoBehaviour
     private void PrepareData()
     {
         if (_dataProvider == null)
-            _dataProvider = Resources.Load<DataProvider>("GameData/DataProxy");
+            _dataProvider = Resources.Load<DataProvider>("GameData/DataProvider");
         
         if (_mapData == null)
             _mapData = Resources.Load<MapData>("GameData/Map/MapData");
