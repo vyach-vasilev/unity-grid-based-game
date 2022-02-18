@@ -10,7 +10,6 @@ public class Game: MonoBehaviour
     [SerializeField] private MapData _mapData;
     [SerializeField] private UnitsStorage _unitsStorage;
     [SerializeField] private KeyBindings _keyBindings;
-    [SerializeField] private HudData _hudData;
 
     public ModuleController<DataStorage, ModuleType> ModuleController => _moduleController;
     
@@ -21,14 +20,12 @@ public class Game: MonoBehaviour
         var inputModule = new InputModule(ModuleType.Input, _keyBindings);
         var mapModule = new MapModule(ModuleType.Map, _mapData);
         var unitModule = new UnitModule(ModuleType.Unit, _unitsStorage);
-        var hudModule = new HudModule(ModuleType.HUD, _hudData, _unitsStorage, this);
 
         _modules = new List<Module<DataStorage, ModuleType>>
         { 
             inputModule,
             mapModule,
             unitModule,
-            hudModule,
         };
         
         _moduleController.Register(_modules);
