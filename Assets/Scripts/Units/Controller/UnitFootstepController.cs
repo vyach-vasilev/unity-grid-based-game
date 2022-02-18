@@ -35,9 +35,9 @@ public class UnitFootstepController: MonoBehaviour
         var pos = transform.TransformPoint(markTransform.localPosition);
         var customTransform = new CustomTransform
         {
-            Position = new Vector3(pos.x, 0.02f, pos.z),
+            Position = new Vector3(pos.x, 0.01f, pos.z),
             Rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0),
-            Scale = new Vector3(0.25f, 0.25f, 0.25f)
+            Scale = new Vector3(0.25f, 0.025f, 0.25f)
         };
         return customTransform;
     }

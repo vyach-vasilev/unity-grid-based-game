@@ -30,7 +30,7 @@ public class UnitShadowsPass: ScriptableRenderPass
                 if (unit == null)
                     return;
 
-                var position = unit.View.Position + Vector3.up * 0.01f;
+                var position = unit.View.Position + Vector3.up * 0.015f;
                 var rotation = Quaternion.Euler(-90, 0, 0);
                 var matrix = Matrix4x4.TRS(position, rotation, Vector3.one);
                 buffer.DrawMesh(mesh, matrix, _material);
