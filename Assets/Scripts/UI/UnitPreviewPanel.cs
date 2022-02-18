@@ -3,15 +3,23 @@ using UnityEngine;
 
 public class UnitPreviewPanel: MonoBehaviour
 {
-    [SerializeField] private GuiPreviewManager _guiPreviewManager;
+    [SerializeField] private Game _game;
     [SerializeField] private TextMeshProUGUI _nameField;
     [SerializeField] private TextMeshProUGUI _fractionField;
 
-    private void OnEnable()
+    public Game Game
     {
-        _guiPreviewManager.OnSelect += UpdateInfo;
+        get => _game;
+        set => _game = value;
     }
 
+    private void OnEnable()
+    {
+        var previewModule = (HudModule)_game.ModuleController.TryGetModule(ModuleType.HUD);
+        previewModule.OnSelect += UpdateInfo;
+    }
+
+    // нужно зафиксить неактивацию обновления
     private void UpdateInfo(object sender, UnitSelectionEvent e)
     {
         var data = (UnitPreview)sender;
@@ -21,6 +29,7 @@ public class UnitPreviewPanel: MonoBehaviour
     
     private void OnDisable()
     {
-        _guiPreviewManager.OnSelect -= UpdateInfo;
+        var previewModule = (HudModule)_game.ModuleController.TryGetModule(ModuleType.HUD);
+        previewModule.OnSelect -= UpdateInfo;
     }
 }

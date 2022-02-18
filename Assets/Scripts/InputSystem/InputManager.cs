@@ -3,7 +3,6 @@
 public class InputManager
 {
     public static InputManager Instance;
-
     private static KeyBindings _keyBindings;
     
     public bool Select => Input.GetKeyDown(_keyBindings.Select);
@@ -13,12 +12,12 @@ public class InputManager
     public bool Minimap => Input.GetKeyDown(_keyBindings.Minimap);
     public bool Highlight => Input.GetKey(_keyBindings.Highlighting);
     
-    public static void Initialize(KeyBindings keyBindings)
+    public static void Create(KeyBindings keyBindings)
     {
         Instance = new InputManager();
         _keyBindings = keyBindings;
     }
-
+    
     public T OnUnitHover<T>() where T : class
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -55,7 +54,7 @@ public class InputManager
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out var hit))
         {
-            if (!hit.transform.TryGetComponent<MapController>(out _)) return Vector3.down;
+            if (!hit.transform.TryGetComponent<Map>(out _)) return Vector3.down;
                 
             var point = hit.point;
             var position = NodeMap.Instance.NodeFromWorldPoint(point).WorldPosition;

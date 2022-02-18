@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Unit Data", menuName = "Data/Unit", order = 0)]
-public class UnitData : ScriptableObject
+public class UnitData : DataStorage
 {
     [SerializeField] private string _name;
     [SerializeField] private GameObject _unit;

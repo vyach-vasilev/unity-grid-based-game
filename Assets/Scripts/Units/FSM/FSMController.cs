@@ -22,11 +22,6 @@ public class FSMController
         _stateMachine.ChangeState(idleState.Id);
     }
     
-    public void ChangeState(UnitState unitState)
-    {
-        _stateMachine.ChangeState(unitState);
-    }
-    
     public void Update()
     {
         _stateMachine.Update();
