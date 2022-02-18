@@ -8,6 +8,7 @@ public class UnitController : MonoBehaviour, IUnitController
     
     private UnitPathController _pathController;
     private UnitSelectionController _selectionController;
+    private UnitFootstepController _footstepController;
     
     private DataProvider _dataProvider;
     private FSMController _fsmController;

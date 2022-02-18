@@ -6,4 +6,5 @@ public class DataProvider : ScriptableObject
 {
     public IUnitView SelectedUnitView { get; set; }
     public List<UnitController> Units { get; } = new();
+    public Queue<CustomTransform> Footsteps { get; } = new();
 }

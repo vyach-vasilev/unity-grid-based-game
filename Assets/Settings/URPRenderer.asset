@@ -73,7 +73,8 @@ MonoBehaviour:
   - {fileID: 3443990220319738747}
   - {fileID: -7774267162158444746}
   - {fileID: -2300793928224908606}
-  m_RendererFeatureMap: 12232ce8f1032f9c6a444862b9b44047b166c4e1304b1d5a2f295dfa4f7d6a4c7bcb13bcdb82cb2f36cf8fb234411c94c25ac7c61cf011e0
+  - {fileID: 812274158643948423}
+  m_RendererFeatureMap: 12232ce8f1032f9c6a444862b9b44047b166c4e1304b1d5a2f295dfa4f7d6a4c7bcb13bcdb82cb2f36cf8fb234411c94c25ac7c61cf011e087ab332e0bc7450b
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -113,6 +114,21 @@ MonoBehaviour:
   m_ClusteredRendering: 0
   m_TileSize: 32
   m_IntermediateTextureMode: 0
+--- !u!114 &812274158643948423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3996360116ae4b23b40fbfcd2fe3e6cd, type: 3}
+  m_Name: FootstepFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  _material: {fileID: 2100000, guid: b6d8683f14620474ab6e395c31a336f8, type: 2}
+  _renderPassEvent: 300
 --- !u!114 &3443990220319738747
 MonoBehaviour:
   m_ObjectHideFlags: 0

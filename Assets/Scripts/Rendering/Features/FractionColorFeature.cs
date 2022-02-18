@@ -17,6 +17,11 @@ public class FractionColorFeature: ScriptableRendererFeature
 
     public override void Create()
     {
+        if (_dataProvider == null)
+        {
+            return;
+        }
+        
         _pass = new FractionColorPass(_dataProvider, _friendMaterial, _enemyMaterial, _friendColor, _enemyColor);
         _pass.renderPassEvent = _renderPassEvent;
     }
