@@ -24,16 +24,10 @@ public class SelectionPass: ScriptableRenderPass
         var buffer = CommandBufferPool.Get(_profilerTag);
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
-            if (_dataProvider.SelectedUnit != null || !_dataProvider.SelectedUnit.Selected)
-            {
-                return;
-            }
             var unit = _dataProvider.SelectedUnit;
-
-            if (unit == null)
-            {
-                return;
-            }
+            
+            if (unit != null && !unit.Selected) return;
+            if (unit == null) return;
             
             var matrix = Matrix4x4.TRS(unit.View.Position + Vector3.up * _offset, Quaternion.identity, Vector3.one);
             buffer.DrawMesh(_mesh, matrix, _material, 0, 0);

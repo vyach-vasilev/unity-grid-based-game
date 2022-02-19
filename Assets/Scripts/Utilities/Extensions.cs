@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 
-public static class MathExtensions
+public static class Extensions
 {
+    public static void SetState(this Animator animator, UnitState state)
+    {
+        animator.SetTrigger(state.ToString());
+    }
+    
+    public static void ResetState(this Animator animator, UnitState state)
+    {
+        animator.ResetTrigger(state.ToString());
+    }
+    
     public static Vector2 XZ(this Vector3 vector)
     {
         return new Vector2(vector.x, vector.z);
