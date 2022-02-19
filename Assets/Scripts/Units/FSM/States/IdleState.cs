@@ -10,25 +10,28 @@ public class IdleState: State<UnitController, UnitState>
         _stateMachine = stateMachine;
     }
     
-    public override void Enter(UnitController entity)
+    public override void Enter(UnitController owner)
     {
         _inputManager = InputManager.Instance;
     }
 
-    public override void Execute(UnitController entity)
+    public override void Execute(UnitController owner)
     {
-        if (entity.View != (UnitView)entity.DataProvider.SelectedUnitView) return;
+        if (owner.View != (UnitView)owner.DataProvider.SelectedUnitView)
+        {
+            return;
+        }
 
-        if (!entity.View.Selected) return;
+        if (!owner.View.Selected) return;
 
         if(!_inputManager.PrepareToAttack)
         {
             //TODO: режими переключения сетки (moving / attack)
             var position = _inputManager.GetWorldNodePosition();
-            entity.OnMoved(position);
+            owner.OnMoved(position);
         }
         
-        if (_inputManager.MoveAction && AvailableMove(entity))
+        if (_inputManager.MoveAction && AvailableMove(owner))
         {
             _stateMachine.ChangeState(UnitState.Moving);
         }
@@ -38,15 +41,15 @@ public class IdleState: State<UnitController, UnitState>
         }
     }
 
-    public override void Exit(UnitController entity)
+    public override void Exit(UnitController owner)
     {
     }
 
-    private bool AvailableMove(UnitController entity)
+    private bool AvailableMove(UnitController owner)
     {
         var nodePosition = _inputManager.GetWorldNodePosition();
         return
-            nodePosition != entity.View.Position && 
+            nodePosition != owner.View.Position && 
             _inputManager.IsWalkableNode();
     }
 }

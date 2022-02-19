@@ -10,8 +10,6 @@ public class Game: MonoBehaviour
     [SerializeField] private MapData _mapData;
     [SerializeField] private UnitsStorage _unitsStorage;
     [SerializeField] private KeyBindings _keyBindings;
-
-    public ModuleController<DataStorage, ModuleType> ModuleController => _moduleController;
     
     private void Awake()
     {

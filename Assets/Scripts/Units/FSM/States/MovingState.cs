@@ -9,34 +9,34 @@ public class MovingState: State<UnitController, UnitState>
     {
         _stateMachine = stateMachine;
     }
-    public override void Enter(UnitController entity)
+    public override void Enter(UnitController owner)
     {
     }
 
-    public override void Execute(UnitController entity)
+    public override void Execute(UnitController owner)
     {
-        if (!IsPathValid(entity, out var path))
+        if (!IsPathValid(owner, out var path))
         {
             _stateMachine.ChangeState(UnitState.Idle);
             return;
         }
         
-        entity.Animator.SetBool(AnimatorIds.MovingId, true);
+        owner.Animator.SetBool(AnimatorIds.MovingId, true);
 
-        if (entity.View.Position.XZ() == path[^1].XZ())
+        if (owner.View.Position.XZ() == path[^1].XZ())
         {
             _stateMachine.ChangeState(UnitState.Idle);
         }
     }
 
-    public override void Exit(UnitController entity)
+    public override void Exit(UnitController owner)
     {
-        entity.Animator.SetBool(AnimatorIds.MovingId, false);
+        owner.Animator.SetBool(AnimatorIds.MovingId, false);
     }
 
-    private bool IsPathValid(UnitController entity, out List<Vector3> path)
+    private bool IsPathValid(UnitController owner, out List<Vector3> path)
     {
-        path = entity.PathController.Path;
+        path = owner.PathController.Path;
         return path is { Count: > 0 };
     }
 }

@@ -14,7 +14,7 @@ public abstract class State<T, U>
         Id = id;
     }
 
-    public abstract void Enter(T entity);
-    public abstract void Execute(T entity);
-    public abstract void Exit(T entity);
+    public abstract void Enter(T owner);
+    public abstract void Execute(T owner);
+    public abstract void Exit(T owner);
 }

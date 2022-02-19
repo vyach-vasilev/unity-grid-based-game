@@ -62,12 +62,6 @@ public class InputManager
         }
         return Vector3.down;
     }
-
-    public Node GetWorldNode()
-    {
-        var position = GetWorldNodePosition();
-        return NodeMap.Instance.NodeFromWorldPoint(position);
-    }
     
     public bool IsWalkableNode()
     {
@@ -75,11 +69,9 @@ public class InputManager
         return node.Walkable;
     }
     
-    public Quaternion RotateOnMouseDirection(UnitController entity)
+    private Node GetWorldNode()
     {
-        var mousePosition = Camera.main.WorldToScreenPoint(entity.transform.position);
-        mousePosition = Input.mousePosition - mousePosition;
-        var angle = Mathf.Atan2(mousePosition.y, -mousePosition.x) * Mathf.Rad2Deg;
-        return Quaternion.AngleAxis(angle - 120, Vector3.up);
+        var position = GetWorldNodePosition();
+        return NodeMap.Instance.NodeFromWorldPoint(position);
     }
 }

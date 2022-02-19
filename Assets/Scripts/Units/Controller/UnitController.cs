@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class UnitController : MonoBehaviour, IUnitController
 {
@@ -31,9 +30,9 @@ public class UnitController : MonoBehaviour, IUnitController
         
         _dataProvider = dataProvider;
         
-        if (!_dataProvider.Units.Contains(this))
-            _dataProvider.Units.Add(this);
+        if (!_dataProvider.Units.Contains(this)) _dataProvider.Units.Add(this);
         
+        // вынести во вне
         _pathController = new UnitPathController(this, transform, _movementSpeed);
         _selectionController = new UnitSelectionController(_view, _dataProvider);
         _fsmController = new FSMController(this);

@@ -17,19 +17,14 @@
     {
         if (!_inputManager.TrySelectUnit<IUnitView>(out var unitView)) return;
         if (_view != unitView) return;
-
         TryDeselect();
-            
         _view.Selected = true;
     }
 
     public void Update()
     {
         OnHover();
-        if (_inputManager.Deselect || _inputManager.IsNeedDeselect<IUnitView>())
-        {
-            TryDeselect();
-        }
+        if (_inputManager.Deselect || _inputManager.IsNeedDeselect<IUnitView>()) TryDeselect();
     }
 
     private void OnHover()
@@ -53,7 +48,6 @@
     private void TryDeselect()
     {
         if (!_view.Selected && _dataProvider.SelectedUnitView == null) return;
-        
         _dataProvider.SelectedUnitView.Selected = false;
         _view.Selected = false;
     }

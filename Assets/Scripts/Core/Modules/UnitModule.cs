@@ -11,7 +11,7 @@ public class UnitModule : Module<DataStorage, ModuleType>
     
     public override void Execute(DataStorage data)
     {
-        Debug.Log("Activate " + this);
+        Debug.Log("Execute: " + Id);
         foreach (var unitData in _unitsStorage.UnitDataList)
         {
             var modelFactory = new UnitModelFactory();

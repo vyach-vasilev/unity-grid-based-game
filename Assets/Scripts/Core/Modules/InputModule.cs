@@ -11,7 +11,7 @@ public class InputModule : Module<DataStorage, ModuleType>
     
     public override void Execute(DataStorage data)
     {
-        Debug.Log("Activate " + this);
+        Debug.Log("Execute: " + Id);
         InputManager.Create(_keyBindings);
     }
 }

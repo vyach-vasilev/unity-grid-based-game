@@ -10,87 +10,78 @@ public class AttackState : State<UnitController, UnitState>
         _stateMachine = stateMachine;
     }
 
-    public override void Enter(UnitController entity)
+    public override void Enter(UnitController owner)
     {
-        //Debug.Log("Enter Attack: " + entity.name);
     }
 
-    public override void Execute(UnitController entity)
+    public override void Execute(UnitController owner)
     {
-        if (!entity.InAttack)
+        if (owner.InAttack) return;
+        
+        owner.Animator.SetState(UnitState.Attack);
+        owner.Animator.SetFloat(AnimatorIds.StateSpeedId, 0f);
+
+        owner.InAttack = true;
+
+        if (!owner.InMove)
         {
-            entity.Animator.SetState(UnitState.Attack);
-            entity.Animator.SetFloat(AnimatorIds.StateSpeedId, 0f);
-
-            entity.InAttack = true;
-
-            if (!entity.InMove)
-            {
-                AttackProcess(entity);
-            }
+            AttackProcess(owner);
         }
     }
 
-    public override void Exit(UnitController entity)
+    public override void Exit(UnitController owner)
     {
-        //Debug.Log("Exit Attack: " + entity.name);
     }
 
-    private async void AttackProcess(UnitController entity)
+    private async void AttackProcess(UnitController owner)
     {
-        while (entity.InAttack)
+        while (owner.InAttack)
         {
             await Task.Yield();
             
-            if (!entity)
+            if (!owner) break;
+            if (!owner.View.Selected || InputManager.Instance.Select)
             {
-                Interrupt();
+                Interrupt(owner);
                 break;
             }
             
-            entity.transform.rotation = InputManager.Instance.RotateOnMouseDirection(entity);
-            
-            if (Input.GetMouseButtonDown(0))
+            owner.transform.rotation = RotateOnMouseDirection(owner);
+            if (InputManager.Instance.MoveAction)
             {
-                Interrupt();
-                break;
-            }
-            
-            if (Input.GetMouseButtonDown(1))
-            {
-                var targetRotation = InputManager.Instance.RotateOnMouseDirection(entity);
-
-                entity.Animator.SetFloat(AnimatorIds.StateSpeedId, 1f);
-                var elapsedTime = 0f;
-                while (elapsedTime < 2f)
-                {
-                    if (!entity)
-                    {
-                        Interrupt();
-                        break;
-                    }
-                    
-                    entity.transform.rotation = Quaternion.Lerp(
-                        entity.transform.rotation, 
-                        targetRotation, elapsedTime);
-                    
-                    elapsedTime += Time.deltaTime;
-                    
-                    if (Mathf.Abs(elapsedTime - 2f) <= 0.01f)
-                    {
-                        //InputHandler.IsSkillProcess = false;
-                    }
-                    
-                    await Task.Yield();
-                }
-                entity.InAttack = false;
-                _stateMachine.ChangeState(UnitState.Idle);
+                await Attack(owner);
             }
         }
     }
 
-    private void Interrupt()
+    private async Task Attack(UnitController owner)
     {
+        var targetRotation = RotateOnMouseDirection(owner);
+        owner.Animator.SetFloat(AnimatorIds.StateSpeedId, 1f);
+        var elapsedTime = 0f;
+        while (elapsedTime < 2f)
+        {
+            if (!owner) break;
+            owner.transform.rotation = Quaternion.Lerp(owner.transform.rotation, targetRotation, elapsedTime);
+            elapsedTime += Time.deltaTime;
+            await Task.Yield();
+        }
+        owner.InAttack = false;
         _stateMachine.ChangeState(UnitState.Idle);
+    }
+    
+    private void Interrupt(UnitController owner)
+    {
+        owner.InAttack = false;
+        owner.Animator.Rebind();
+        _stateMachine.ChangeState(UnitState.Idle);
+    }
+    
+    private Quaternion RotateOnMouseDirection(UnitController owner)
+    {
+        var mousePosition = Camera.main.WorldToScreenPoint(owner.transform.position);
+        mousePosition = Input.mousePosition - mousePosition;
+        var angle = Mathf.Atan2(mousePosition.y, -mousePosition.x) * Mathf.Rad2Deg;
+        return Quaternion.AngleAxis(angle - 120, Vector3.up);
     }
 }

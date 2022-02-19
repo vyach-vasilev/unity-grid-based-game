@@ -25,6 +25,7 @@ public class ModuleController<T, U>
         if (!_modules.ContainsKey(module.Id))
         {
             _modules.Add(module.Id, module);
+            Debug.Log("Register: " + module.Id);
             module.Execute(_data);
         }
     }
@@ -42,6 +43,7 @@ public class ModuleController<T, U>
     {
         if(_modules.ContainsKey(module.Id))
         {
+            Debug.Log("Unregister: " + module.Id);
             _modules.Remove(module.Id);
         }
     }

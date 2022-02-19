@@ -12,7 +12,7 @@ public class MapModule : Module<DataStorage, ModuleType>
     
     public override void Execute(DataStorage data)
     {
-        Debug.Log("Activate " + this);
+        Debug.Log("Execute: " + Id);
 
         _map = Object.Instantiate(_mapData.Prefab);
         _map.name = "Map";
