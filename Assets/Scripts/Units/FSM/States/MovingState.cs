@@ -36,7 +36,7 @@ public class MovingState: State<UnitController, UnitState>
 
     private bool IsPathValid(UnitController owner, out List<Vector3> path)
     {
-        path = owner.PathController.Path;
+        path = owner.UnitPathController.Path;
         return path is { Count: > 0 };
     }
 }

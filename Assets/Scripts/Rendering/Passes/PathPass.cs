@@ -85,7 +85,7 @@ public class PathPass : ScriptableRenderPass
 
         var unitController = unitView.GetComponent<UnitController>();
         if (unitController.InAttack) return false;
-        pathController = unitController.PathController;
+        pathController = unitController.UnitPathController;
         return true;
     }
 }

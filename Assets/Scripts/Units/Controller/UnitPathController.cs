@@ -18,10 +18,10 @@ public class UnitPathController
     public List<Vector3> AvailablePath => GetAvailablePath();
     public bool IsMoving => _isMoving;
     
-    public UnitPathController(UnitController unitController, Transform transform, float speed)
+    public UnitPathController(UnitController unitController, float speed)
     {
         _unitController = unitController;
-        _transform = transform;
+        _transform = _unitController.transform;
         _speed = speed;
     }
 
