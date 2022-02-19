@@ -29,7 +29,7 @@ public class SelectionFeature: ScriptableRendererFeature
     private bool IsValid()
     {
         return
-            _material && _mesh && _dataProvider && _dataProvider.SelectedUnitView != null;
+            _material && _mesh && _dataProvider && _dataProvider.SelectedUnit != null;
     }
     
     public void OnEnable()

@@ -10,11 +10,12 @@ public class PathFeature: ScriptableRendererFeature
     [SerializeField] private Mesh _pathMesh;
     [SerializeField] private Material _selectionMaterial;
     [SerializeField] private Material _waypointMaterial;
+    [SerializeField] private Material _attackMaterial;
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     
     public override void Create()
     {
-        _pass = new PathPass(_waypointMaterial, _selectionMaterial, _pathMesh, _offsetY, _dataProvider);
+        _pass = new PathPass(_attackMaterial, _waypointMaterial, _selectionMaterial, _pathMesh, _offsetY, _dataProvider);
         _pass.renderPassEvent = _renderPassEvent;
     }
 
@@ -30,10 +31,12 @@ public class PathFeature: ScriptableRendererFeature
     private bool IsValid()
     {
         return
+            _attackMaterial &&
             _selectionMaterial && 
             _waypointMaterial &&
             _pathMesh &&
             _dataProvider &&
+            _dataProvider.SelectedUnit &&
             InputManager.Instance != null;
     }
     

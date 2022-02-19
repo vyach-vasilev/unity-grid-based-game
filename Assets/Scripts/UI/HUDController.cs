@@ -40,7 +40,7 @@ public class HUDController: MonoBehaviour
 
     private void PreviewHandler()
     {
-        if (InputManager.Instance.TrySelectUnit<UnitController>(out var unit))
+        if (InputManager.Instance.TryUnitSelect<UnitController>(out var unit))
         {
             if (unit == null)
                 return;
@@ -74,12 +74,12 @@ public class HUDController: MonoBehaviour
     
     private void UnitPreviewHandler()
     {
-        if (_dataProvider.SelectedUnitView != null && !_unitPreview.activeSelf)
+        if (_dataProvider.SelectedUnit != null && !_unitPreview.activeSelf)
         {
             _previewCamera.gameObject.SetActive(true);
             _unitPreview.SetActive(true);
         }
-        else if(_dataProvider.SelectedUnitView == null && _unitPreview.activeSelf)
+        else if(_dataProvider.SelectedUnit == null && _unitPreview.activeSelf)
         {
             _previewCamera.gameObject.SetActive(false);
             _unitPreview.SetActive(false);

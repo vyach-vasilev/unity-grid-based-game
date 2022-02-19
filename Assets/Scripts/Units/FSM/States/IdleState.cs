@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class IdleState: State<UnitController, UnitState>
+﻿public class IdleState: State<UnitController, UnitState>
 {
     private readonly UnitStateMachine<UnitController, UnitState> _stateMachine;
     private InputManager _inputManager;
@@ -17,16 +15,11 @@ public class IdleState: State<UnitController, UnitState>
 
     public override void Execute(UnitController owner)
     {
-        if (owner.View != (UnitView)owner.DataProvider.SelectedUnitView)
-        {
-            return;
-        }
-
-        if (!owner.View.Selected) return;
+        if (owner != owner.DataProvider.SelectedUnit) return;
+        if (!owner.Selected) return;
 
         if(!_inputManager.PrepareToAttack)
         {
-            //TODO: режими переключения сетки (moving / attack)
             var position = _inputManager.GetWorldNodePosition();
             owner.OnMoved(position);
         }

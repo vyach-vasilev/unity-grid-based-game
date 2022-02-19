@@ -1,54 +1,52 @@
 ﻿public class UnitSelectionController
 {
     private readonly InputManager _inputManager;
-    private readonly IUnitView _view;
+    private readonly UnitController _unitController;
     private readonly DataProvider _dataProvider;
     
-    private UnitView View => (UnitView)_view;
-
-    public UnitSelectionController(IUnitView view, DataProvider dataProvider)
+    public UnitSelectionController(UnitController unitController, DataProvider dataProvider)
     {
         _inputManager = InputManager.Instance;
-        _view = view;
+        _unitController = unitController;
         _dataProvider = dataProvider;
     }
     
     public void Select()
     {
-        if (!_inputManager.TrySelectUnit<IUnitView>(out var unitView)) return;
-        if (_view != unitView) return;
+        if (!_inputManager.TryUnitSelect<UnitController>(out var unitController)) return;
+        if (_unitController != unitController) return;
         TryDeselect();
-        _view.Selected = true;
+        _unitController.Selected = true;
     }
 
     public void Update()
     {
         OnHover();
-        if (_inputManager.Deselect || _inputManager.IsNeedDeselect<IUnitView>()) TryDeselect();
+        if (_inputManager.Deselect || _inputManager.IsNeedDeselect<UnitController>()) TryDeselect();
     }
 
     private void OnHover()
     {
-        var view = _inputManager.OnUnitHover<IUnitView>();
-        View.SetOutline(view != null && _view == view);
+        var unitController = _inputManager.OnUnitHover<UnitController>();
+        _unitController.View.SetOutline(unitController != null && _unitController == unitController);
     }
 
     public void OnDeselect(object sender, UnitSelectionEvent e)
     {
-        if (_view != sender || _dataProvider.SelectedUnitView != _view) return;
-        _dataProvider.SelectedUnitView = null;
+        if (_unitController != sender || _dataProvider.SelectedUnit != _unitController) return;
+        _dataProvider.SelectedUnit = null;
     }
 
     public void OnSelect(object sender, UnitSelectionEvent e)
     {
-        if (_view != sender || _dataProvider.SelectedUnitView == _view) return;
-        _dataProvider.SelectedUnitView = _view;
+        if (_unitController != sender || _dataProvider.SelectedUnit == _unitController) return;
+        _dataProvider.SelectedUnit = _unitController;
     }
     
     private void TryDeselect()
     {
-        if (!_view.Selected && _dataProvider.SelectedUnitView == null) return;
-        _dataProvider.SelectedUnitView.Selected = false;
-        _view.Selected = false;
+        if (!_unitController.Selected && _dataProvider.SelectedUnit == null) return;
+        _dataProvider.SelectedUnit.Selected = false;
+        _unitController.Selected = false;
     }
 }

@@ -36,7 +36,7 @@ public class UnitModule : Module<DataStorage, ModuleType>
             if (!dataProvider.Units.Contains(unitController)) dataProvider.Units.Add(unitController);
             
             var unitPathController = new UnitPathController(unitController, unitData.Speed);
-            var unitSelectionController = new UnitSelectionController(unitView, dataProvider);
+            var unitSelectionController = new UnitSelectionController(unitController, dataProvider);
             var fsmController = new FSMController(unitController);
 
             unitController.UnitPathController = unitPathController;

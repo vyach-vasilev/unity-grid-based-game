@@ -1,15 +1,30 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class UnitController : MonoBehaviour, IUnitController
 {
     private IUnitModel _model;
     private IUnitView _view;
+    private bool _selected;
+
+    public event EventHandler<UnitSelectionEvent> OnSelect = (_, _) => {};
+    public event EventHandler<UnitSelectionEvent> OnDeselect = (_, _) => {};
     
+    public bool Selected
+    {
+        get => _selected;
+        set
+        {
+            _selected = value;
+            var evt = new UnitSelectionEvent();
+            if (_selected) OnSelect.Invoke(this, evt);
+            else OnDeselect.Invoke(this, evt);
+        }
+    }
     
     public Animator Animator => GetComponentInChildren<Animator>();
     public UnitView View => (UnitView)_view;
     public UnitModel Model => (UnitModel)_model;
-    
     public UnitPathController UnitPathController { get; set; }
     public UnitSelectionController UnitSelectionController { get; set; }
     public FSMController FSMController { get; set; }
@@ -28,14 +43,14 @@ public class UnitController : MonoBehaviour, IUnitController
     
     public void Subscribe()
     {
-        _view.OnSelect += UnitSelectionController.OnSelect;
-        _view.OnDeselect += UnitSelectionController.OnDeselect;
+        OnSelect += UnitSelectionController.OnSelect;
+        OnDeselect += UnitSelectionController.OnDeselect;
     }
 
     private void Unsubscribe()
     {
-        _view.OnSelect -= UnitSelectionController.OnSelect;
-        _view.OnDeselect -= UnitSelectionController.OnDeselect;
+        OnSelect -= UnitSelectionController.OnSelect;
+        OnDeselect -= UnitSelectionController.OnDeselect;
     }
     
     private void OnMouseDown()

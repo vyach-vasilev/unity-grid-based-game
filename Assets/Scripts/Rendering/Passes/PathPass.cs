@@ -5,15 +5,16 @@ using UnityEngine.Rendering.Universal;
 public class PathPass : ScriptableRenderPass
 {
     private readonly string _profilerTag = "Path Feature";
-
+    private readonly Material _attackMaterial;
     private readonly Material _waypointMaterial;
     private readonly Material _selectionMaterial;
     private readonly Mesh _pathMesh;
     private readonly float _offsetY;
     private readonly DataProvider _dataProvider;
     
-    public PathPass(Material waypointMaterial, Material selectionMaterial, Mesh pathMesh, float offsetY, DataProvider dataProvider)
+    public PathPass(Material attackMaterial, Material waypointMaterial, Material selectionMaterial, Mesh pathMesh, float offsetY, DataProvider dataProvider)
     {
+        _attackMaterial = attackMaterial;
         _waypointMaterial = waypointMaterial;
         _selectionMaterial = selectionMaterial;
         _pathMesh = pathMesh;
@@ -26,22 +27,33 @@ public class PathPass : ScriptableRenderPass
         var buffer = CommandBufferPool.Get(_profilerTag);
         using (new ProfilingScope(buffer, new ProfilingSampler(_profilerTag)))
         {
-            DrawHoverNode(buffer);
-            DrawPath(buffer);
+            if (!_dataProvider.SelectedUnit.InAttack)
+            {
+                DrawHoverNode(buffer);
+                DrawPath(buffer);
+            }
+            else
+            {
+                DrawAttackAvailableNodes(buffer);
+            }
         }
 
         context.ExecuteCommandBuffer(buffer);
         CommandBufferPool.Release(buffer);
     }
 
-    private void DrawAvailableNodes(CommandBuffer buffer)
+    private void DrawAttackAvailableNodes(CommandBuffer buffer)
     {
-        if (!TryGetUnitController(out var pathController))
+        if (!TryGetPathController(out var pathController, true)) return;
+        
+        var positions = pathController.AttackAvailablePath;
+        for (var i = 0; i < positions.Count; i++)
         {
-            return;
+            var position = positions[i];
+            position.y = _offsetY;
+            var matrix = Matrix4x4.Translate(position);
+            buffer.DrawMesh(_pathMesh, matrix, _attackMaterial, 0, 0);
         }
-
-        var path = pathController.AvailablePath;
     }
 
     private void DrawHoverNode(CommandBuffer buffer)
@@ -55,10 +67,7 @@ public class PathPass : ScriptableRenderPass
 
     private void DrawPath(CommandBuffer buffer)
     {
-        if (!TryGetUnitController(out var pathController))
-        {
-            return;
-        }
+        if (!TryGetPathController(out var pathController)) return;
         
         var path = pathController.WaypointsPath;
         var nodePosition = InputManager.Instance.GetWorldNodePosition();
@@ -74,18 +83,22 @@ public class PathPass : ScriptableRenderPass
         }
     }
 
-    private bool TryGetUnitController(out UnitPathController pathController)
+    private bool TryGetPathController(out UnitPathController pathController, bool inAttack = false)
     {
-        // TODO: подумать как отрефакторить. Надо получать pathController без всех этих усложнений и get component.
         pathController = null;
-        if (_dataProvider.SelectedUnitView == null) return false;
-
-        var unitView = (UnitView)_dataProvider.SelectedUnitView;
-        if (unitView == null || !unitView.Selected) return false;
-
-        var unitController = unitView.GetComponent<UnitController>();
-        if (unitController.InAttack) return false;
+        if (!TryGetUnitController(out var unitController)) return false;
+        if(!inAttack && unitController.InAttack) return false;
         pathController = unitController.UnitPathController;
+        return true;
+    }
+    
+    private bool TryGetUnitController(out UnitController unitController)
+    {
+        unitController = null;
+        if (_dataProvider.SelectedUnit == null) return false;
+        var controller = _dataProvider.SelectedUnit;
+        if (controller == null || !controller.Selected) return false;
+        unitController = controller;
         return true;
     }
 }

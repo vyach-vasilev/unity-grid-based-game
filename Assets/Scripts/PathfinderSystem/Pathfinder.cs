@@ -40,7 +40,7 @@ public class Pathfinder
                     break;
                 }
 
-                foreach (Node neighbour in _map.GetNeighbours(currentNode))
+                foreach (Node neighbour in _map.GetFourNeighbours(currentNode))
                 {
                     if (!neighbour.Walkable || closedSet.Contains(neighbour)) continue;
 

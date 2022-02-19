@@ -40,7 +40,7 @@ public class AttackState : State<UnitController, UnitState>
             await Task.Yield();
             
             if (!owner) break;
-            if (!owner.View.Selected || InputManager.Instance.Select)
+            if (!owner.Selected || InputManager.Instance.Select)
             {
                 Interrupt(owner);
                 break;

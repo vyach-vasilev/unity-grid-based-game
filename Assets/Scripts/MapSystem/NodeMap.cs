@@ -57,7 +57,7 @@ public class NodeMap
         return Nodes[x, y];
     }
 
-    public List<Node> GetNeighbours(Node node)
+    public List<Node> GetFourNeighbours(Node node)
     {
         var neighbours = new List<Node>();
 
@@ -70,6 +70,26 @@ public class NodeMap
             if (x == 1 && y == 1 || x == -1 && y == -1 || x == 1 && y == -1 || x == -1 && y == 1)
                 continue;
 
+            var checkX = node.X + x;
+            var checkY = node.Y + y;
+
+            if (checkX >= 0 && checkX < _gridSizeX && checkY >= 0 && checkY < _gridSizeY)
+                neighbours.Add(Nodes[checkX, checkY]);
+        }
+
+        return neighbours;
+    }
+    
+    public List<Node> GetEightNeighbours(Node node)
+    {
+        var neighbours = new List<Node>();
+
+        for (var x = -1; x <= 1; x++)
+        for (var y = -1; y <= 1; y++)
+        {
+            if (x == 0 && y == 0)
+                continue;
+            
             var checkX = node.X + x;
             var checkY = node.Y + y;
 

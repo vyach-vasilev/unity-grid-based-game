@@ -1,4 +1,3 @@
-﻿public interface IUnitView: ISelectable
+﻿public interface IUnitView
 {
-    bool Selected { get; set; }
 }

@@ -15,7 +15,7 @@ public class UnitPathController
 
     public List<Vector3> Path => _path;
     public List<Vector3> WaypointsPath => RetracedPath();
-    public List<Vector3> AvailablePath => GetAvailablePath();
+    public List<Vector3> AttackAvailablePath => AttackPath();
     public bool IsMoving => _isMoving;
     
     public UnitPathController(UnitController unitController, float speed)
@@ -46,7 +46,7 @@ public class UnitPathController
             _retracedPath.AddRange(newPath);
             _targetIndex = 0;
 
-            if (!_unitController.View.Selected)
+            if (!_unitController.Selected)
             {
                 _path.Clear();
                 return;
@@ -113,10 +113,18 @@ public class UnitPathController
         return _retracedPath;
     }
     
-    private List<Vector3> GetAvailablePath()
+    private List<Vector3> AttackPath()
     {
-        var list = new List<Vector3>();
-        list.Add(_path[0]);
-        return list;
+        var neighboursNodesPositions = new List<Vector3>();
+        var currentNode = NodeMap.Instance.NodeFromWorldPoint(_transform.position);
+        var neighboursNodes = NodeMap.Instance.GetEightNeighbours(currentNode);
+
+        foreach (var neighbourNode in neighboursNodes)
+        {
+            var position = neighbourNode.WorldPosition;
+            neighboursNodesPositions.Add(position);
+        }
+
+        return neighboursNodesPositions;
     }
 }

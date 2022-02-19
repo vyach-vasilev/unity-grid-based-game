@@ -24,7 +24,12 @@ public class InputManager
         return Physics.Raycast(ray, out var hit) ? hit.transform.GetComponent<T>() : null;
     }
     
-    public bool TrySelectUnit<T>(out T selectedUnit)
+    public T OnUnitSelect<T>() where T : class
+    {
+        return !Select ? null : OnUnitHover<T>();
+    }
+    
+    public bool TryUnitSelect<T>(out T selectedUnit)
     {
         selectedUnit = default;
         if (Select)
