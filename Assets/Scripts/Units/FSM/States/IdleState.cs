@@ -18,19 +18,27 @@
         if (owner != owner.DataProvider.SelectedUnit) return;
         if (!owner.Selected) return;
 
-        if(!_inputManager.PrepareToAttack)
-        {
-            var position = _inputManager.GetWorldNodePosition();
-            owner.OnMoved(position);
-        }
+        owner.OnMoved(_inputManager.GetWorldNodePosition());
         
-        if (_inputManager.MoveAction && AvailableMove(owner))
+        if (_inputManager.MoveAction)
         {
-            _stateMachine.ChangeState(UnitState.Moving);
+            if(AvailableMove(owner))
+                _stateMachine.ChangeState(UnitState.Moving);
         }
-        else if (_inputManager.PrepareToAttack)
+        if (_inputManager.Skill1)
         {
-            _stateMachine.ChangeState(UnitState.Attack);
+            owner.AttackVariants = AttackVariants.SmallCross;
+            _stateMachine.ChangeState(UnitState.Attack1);
+        }
+        if(_inputManager.Skill2)
+        {
+            owner.AttackVariants = AttackVariants.Octogram;
+            _stateMachine.ChangeState(UnitState.Attack2);
+        }
+        if(_inputManager.Skill3)
+        {
+            owner.AttackVariants = AttackVariants.GiantCross;
+            _stateMachine.ChangeState(UnitState.Attack3);
         }
     }
 

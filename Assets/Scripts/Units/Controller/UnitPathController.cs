@@ -117,7 +117,15 @@ public class UnitPathController
     {
         var neighboursNodesPositions = new List<Vector3>();
         var currentNode = NodeMap.Instance.NodeFromWorldPoint(_transform.position);
-        var neighboursNodes = NodeMap.Instance.GetEightNeighbours(currentNode);
+        
+        var neighboursNodes = _unitController.AttackVariants switch
+        {
+            AttackVariants.SmallCross => NodeMap.Instance.GetFourNeighbours(currentNode),
+            AttackVariants.Octogram => NodeMap.Instance.GetEightNeighbours(currentNode),
+            AttackVariants.GiantCross => NodeMap.Instance.GetGiantCross(currentNode),
+            
+            _ => NodeMap.Instance.GetFourNeighbours(currentNode)
+        };
 
         foreach (var neighbourNode in neighboursNodes)
         {

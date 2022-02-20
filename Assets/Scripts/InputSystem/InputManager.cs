@@ -7,7 +7,11 @@ public class InputManager
     
     public bool Select => Input.GetKeyDown(_keyBindings.Select);
     public bool MoveAction => Input.GetKeyDown(_keyBindings.Action);
-    public bool PrepareToAttack => Input.GetKeyDown(_keyBindings.PrepareToAttack);
+    
+    public bool Skill1 => Input.GetKeyDown(_keyBindings.Skill1);
+    public bool Skill2 => Input.GetKeyDown(_keyBindings.Skill2);
+    public bool Skill3 => Input.GetKeyDown(_keyBindings.Skill3);
+    
     public bool Deselect => Input.GetKeyDown(_keyBindings.Deselect);
     public bool Minimap => Input.GetKeyDown(_keyBindings.Minimap);
     public bool Highlight => Input.GetKey(_keyBindings.Highlighting);

@@ -1,8 +1,10 @@
 ﻿public enum UnitState
 {
     Idle = 0,
-    Attack = 1,
-    Moving = 2,
+    Moving = 1,
+    Attack1 = 2,
+    Attack2 = 3,
+    Attack3 = 4,
 }
 
 public abstract class State<T, U>

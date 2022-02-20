@@ -99,4 +99,27 @@ public class NodeMap
 
         return neighbours;
     }
+    
+    public List<Node> GetGiantCross(Node node)
+    {
+        var neighbours = new List<Node>();
+
+        for (var x = -3; x <= 3; x++)
+        for (var y = -3; y <= 3; y++)
+        {
+            if (x == 0 && y == 0)
+                continue;
+
+            if (x == y || x == Mathf.Abs(y) || y == Mathf.Abs(x))
+            {
+                var checkX = node.X + x;
+                var checkY = node.Y + y;
+
+                if (checkX >= 0 && checkX < _gridSizeX && checkY >= 0 && checkY < _gridSizeY)
+                    neighbours.Add(Nodes[checkX, checkY]);
+            }
+        }
+
+        return neighbours;
+    }
 }

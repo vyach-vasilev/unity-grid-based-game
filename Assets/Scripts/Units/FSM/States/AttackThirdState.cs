@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 
-public class AttackState : State<UnitController, UnitState>
+public class AttackThirdState : State<UnitController, UnitState>
 {
+    private static readonly int Attack3 = Animator.StringToHash("Attack");
     private readonly UnitStateMachine<UnitController, UnitState> _stateMachine;
 
-    public AttackState(UnitState id, UnitStateMachine<UnitController, UnitState> stateMachine) : base(id)
+    public AttackThirdState(UnitState id, UnitStateMachine<UnitController, UnitState> stateMachine) : base(id)
     {
         _stateMachine = stateMachine;
     }
@@ -18,7 +19,7 @@ public class AttackState : State<UnitController, UnitState>
     {
         if (owner.InAttack) return;
         
-        owner.Animator.SetState(UnitState.Attack);
+        owner.Animator.SetTrigger(Attack3);
         owner.Animator.SetFloat(AnimatorIds.StateSpeedId, 0f);
 
         owner.InAttack = true;
@@ -46,7 +47,6 @@ public class AttackState : State<UnitController, UnitState>
                 break;
             }
             
-            owner.transform.rotation = RotateOnMouseDirection(owner);
             if (InputManager.Instance.MoveAction)
             {
                 await Attack(owner);
@@ -56,13 +56,11 @@ public class AttackState : State<UnitController, UnitState>
 
     private async Task Attack(UnitController owner)
     {
-        var targetRotation = RotateOnMouseDirection(owner);
         owner.Animator.SetFloat(AnimatorIds.StateSpeedId, 1f);
         var elapsedTime = 0f;
         while (elapsedTime < 2f)
         {
             if (!owner) break;
-            owner.transform.rotation = Quaternion.Lerp(owner.transform.rotation, targetRotation, elapsedTime);
             elapsedTime += Time.deltaTime;
             await Task.Yield();
         }
@@ -75,13 +73,5 @@ public class AttackState : State<UnitController, UnitState>
         owner.InAttack = false;
         owner.Animator.Rebind();
         _stateMachine.ChangeState(UnitState.Idle);
-    }
-    
-    private Quaternion RotateOnMouseDirection(UnitController owner)
-    {
-        var mousePosition = Camera.main.WorldToScreenPoint(owner.transform.position);
-        mousePosition = Input.mousePosition - mousePosition;
-        var angle = Mathf.Atan2(mousePosition.y, -mousePosition.x) * Mathf.Rad2Deg;
-        return Quaternion.AngleAxis(angle - 120, Vector3.up);
     }
 }

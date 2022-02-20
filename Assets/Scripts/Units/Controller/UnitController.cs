@@ -32,6 +32,7 @@ public class UnitController : MonoBehaviour, IUnitController
     
     public bool InMove => UnitPathController.IsMoving;
     public bool InAttack { get; set; }
+    public AttackVariants AttackVariants { get; set; }
     
     public void Initialize(IUnitModel model, IUnitView view)
     {
