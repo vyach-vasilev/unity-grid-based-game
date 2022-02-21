@@ -5,7 +5,8 @@ using UnityEngine;
 public class HUDController: MonoBehaviour
 {
     private readonly List<UnitPreview> _unitPreviews = new();
-
+    private InputManager _inputManager;
+    
     [SerializeField] private DataProvider _dataProvider;
     [SerializeField] private UnitsStorage _unitsStorage;
 
@@ -29,6 +30,8 @@ public class HUDController: MonoBehaviour
             preview.Type = unitData.Type;
             _unitPreviews.Add(preview);
         }
+        
+        _inputManager = InputManager.Instance;
     }
     
     private void Update()
@@ -40,7 +43,7 @@ public class HUDController: MonoBehaviour
 
     private void PreviewHandler()
     {
-        if (InputManager.Instance.TryUnitSelect<UnitController>(out var unit))
+        if (_inputManager.TryUnitSelect<UnitController>(out var unit))
         {
             if (unit == null)
                 return;
@@ -57,7 +60,7 @@ public class HUDController: MonoBehaviour
     
     private void MinimapHandler()
     {
-        if (InputManager.Instance.Minimap)
+        if (_inputManager.GetKeyDown(KeybindingActions.Minimap))
         {
             if (_minimapCamera.gameObject.activeSelf || _minimapOverlay.activeSelf)
             {

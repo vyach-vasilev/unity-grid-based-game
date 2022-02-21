@@ -12,4 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f4220e37fc4e5ebf34eedb9b665be2, type: 3}
   m_Name: KeyBindings
   m_EditorClassIdentifier: 
-  Highlighting: 304
+  KeybindingPairs:
+  - KeybindingAction: 0
+    KeyCode: 323
+  - KeybindingAction: 4
+    KeyCode: 304
+  - KeybindingAction: 1
+    KeyCode: 324
+  - KeybindingAction: 2
+    KeyCode: 27
+  - KeybindingAction: 3
+    KeyCode: 109
+  - KeybindingAction: 5
+    KeyCode: 49
+  - KeybindingAction: 6
+    KeyCode: 50
+  - KeybindingAction: 7
+    KeyCode: 51

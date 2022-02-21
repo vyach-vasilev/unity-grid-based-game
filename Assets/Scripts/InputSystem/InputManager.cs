@@ -3,23 +3,60 @@
 public class InputManager
 {
     public static InputManager Instance;
-    private static KeyBindings _keyBindings;
+    private static Keybindings _keybindings;
     
-    public bool Select => Input.GetKeyDown(_keyBindings.Select);
-    public bool MoveAction => Input.GetKeyDown(_keyBindings.Action);
-    
-    public bool Skill1 => Input.GetKeyDown(_keyBindings.Skill1);
-    public bool Skill2 => Input.GetKeyDown(_keyBindings.Skill2);
-    public bool Skill3 => Input.GetKeyDown(_keyBindings.Skill3);
-    
-    public bool Deselect => Input.GetKeyDown(_keyBindings.Deselect);
-    public bool Minimap => Input.GetKeyDown(_keyBindings.Minimap);
-    public bool Highlight => Input.GetKey(_keyBindings.Highlighting);
-    
-    public static void Create(KeyBindings keyBindings)
+    public static void Create(Keybindings keybindings)
     {
         Instance = new InputManager();
-        _keyBindings = keyBindings;
+        _keybindings = keybindings;
+    }
+
+    public KeyCode GetKeyForAction(KeybindingActions keybindingAction)
+    {
+        foreach (var keybindingPair in _keybindings.KeybindingPairs)
+        {
+            if (keybindingPair.KeybindingAction == keybindingAction)
+            {
+                return keybindingPair.KeyCode;
+            }
+        }
+        return KeyCode.None;
+    }
+
+    public bool GetKeyDown(KeybindingActions keybindingAction)
+    {
+        foreach (var keybindingPair in _keybindings.KeybindingPairs)
+        {
+            if (keybindingPair.KeybindingAction == keybindingAction)
+            {
+                return Input.GetKeyDown(keybindingPair.KeyCode);
+            }
+        }
+        return false;
+    }
+
+    public bool GetKeyUp(KeybindingActions keybindingAction)
+    {
+        foreach (var keybindingPair in _keybindings.KeybindingPairs)
+        {
+            if (keybindingPair.KeybindingAction == keybindingAction)
+            {
+                return Input.GetKeyUp(keybindingPair.KeyCode);
+            }
+        }
+        return false;
+    }
+
+    public bool GetKey(KeybindingActions keybindingAction)
+    {
+        foreach (var keybindingPair in _keybindings.KeybindingPairs)
+        {
+            if (keybindingPair.KeybindingAction == keybindingAction)
+            {
+                return Input.GetKey(keybindingPair.KeyCode);
+            }
+        }
+        return false;
     }
     
     public T OnUnitHover<T>() where T : class
@@ -30,13 +67,13 @@ public class InputManager
     
     public T OnUnitSelect<T>() where T : class
     {
-        return !Select ? null : OnUnitHover<T>();
+        return !GetKeyDown(KeybindingActions.Select) ? null : OnUnitHover<T>();
     }
     
     public bool TryUnitSelect<T>(out T selectedUnit)
     {
         selectedUnit = default;
-        if (Select)
+        if (GetKeyDown(KeybindingActions.Select))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out var hit))
@@ -50,7 +87,7 @@ public class InputManager
 
     public bool IsNeedDeselect<T>()
     {
-        if(Select)
+        if(GetKeyDown(KeybindingActions.Select))
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             return !Physics.Raycast(ray, out var hit) || !hit.transform.TryGetComponent<T>(out _);

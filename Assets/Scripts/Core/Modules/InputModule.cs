@@ -2,16 +2,16 @@
 
 public class InputModule : Module<DataStorage, ModuleType>
 {
-    private readonly KeyBindings _keyBindings;
+    private readonly Keybindings _keybindings;
     
-    public InputModule(ModuleType id, KeyBindings keyBindings) : base(id)
+    public InputModule(ModuleType id, Keybindings keybindings) : base(id)
     {
-        _keyBindings = keyBindings;
+        _keybindings = keybindings;
     }
     
     public override void Execute(DataStorage data)
     {
         Debug.Log("Execute: " + Id);
-        InputManager.Create(_keyBindings);
+        InputManager.Create(_keybindings);
     }
 }

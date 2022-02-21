@@ -6,6 +6,8 @@ public class AttackThirdState : State<UnitController, UnitState>
     private static readonly int Attack3 = Animator.StringToHash("Attack");
     private readonly UnitStateMachine<UnitController, UnitState> _stateMachine;
 
+    private InputManager _inputManager;
+    
     public AttackThirdState(UnitState id, UnitStateMachine<UnitController, UnitState> stateMachine) : base(id)
     {
         _stateMachine = stateMachine;
@@ -13,6 +15,7 @@ public class AttackThirdState : State<UnitController, UnitState>
 
     public override void Enter(UnitController owner)
     {
+        _inputManager = InputManager.Instance;
     }
 
     public override void Execute(UnitController owner)
@@ -41,13 +44,13 @@ public class AttackThirdState : State<UnitController, UnitState>
             await Task.Yield();
             
             if (!owner) break;
-            if (!owner.Selected || InputManager.Instance.Select)
+            if (!owner.Selected || _inputManager.GetKeyDown(KeybindingActions.Select))
             {
                 Interrupt(owner);
                 break;
             }
             
-            if (InputManager.Instance.MoveAction)
+            if (_inputManager.GetKeyDown(KeybindingActions.Action))
             {
                 await Attack(owner);
             }

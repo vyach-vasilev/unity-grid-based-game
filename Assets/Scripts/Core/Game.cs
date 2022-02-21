@@ -9,13 +9,13 @@ public class Game: MonoBehaviour
     [SerializeField] private DataProvider _dataProvider;
     [SerializeField] private MapData _mapData;
     [SerializeField] private UnitsStorage _unitsStorage;
-    [SerializeField] private KeyBindings _keyBindings;
+    [SerializeField] private Keybindings keybindings;
     
     private void Awake()
     {
         _moduleController = new ModuleController<DataStorage, ModuleType>(_dataProvider);
 
-        var inputModule = new InputModule(ModuleType.Input, _keyBindings);
+        var inputModule = new InputModule(ModuleType.Input, keybindings);
         var mapModule = new MapModule(ModuleType.Map, _mapData);
         var unitModule = new UnitModule(ModuleType.Unit, _unitsStorage);
 

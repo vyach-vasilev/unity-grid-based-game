@@ -8,7 +8,9 @@ public class UnitPathController
     private readonly List<Vector3> _retracedPath = new();
     private readonly UnitController _unitController;
     private readonly float _speed;
-
+    
+    private InputManager _inputManager;
+    
     private int _targetIndex;
     private List<Vector3> _path;
     private bool _isMoving;
@@ -23,6 +25,7 @@ public class UnitPathController
         _unitController = unitController;
         _transform = _unitController.transform;
         _speed = speed;
+        _inputManager = InputManager.Instance;
     }
 
     public void OnMoved(Vector3 destination)
@@ -52,7 +55,7 @@ public class UnitPathController
                 return;
             }
 
-            if (InputManager.Instance.MoveAction)
+            if (_inputManager.GetKeyDown(KeybindingActions.Action))
             {
                 _isMoving = true;
                 FollowPath();

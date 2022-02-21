@@ -471,7 +471,7 @@ MonoBehaviour:
   _dataProvider: {fileID: 11400000, guid: 437294c75b55ae5489ede5d982da9d29, type: 2}
   _mapData: {fileID: 11400000, guid: e84906d7bda877e4b9514d1bcb255e2c, type: 2}
   _unitsStorage: {fileID: 11400000, guid: f9439f70b0944154c894f34dac323b0d, type: 2}
-  _keyBindings: {fileID: 11400000, guid: acf7883975b097e42b5e6fb270e1ee28, type: 2}
+  keybindings: {fileID: 11400000, guid: acf7883975b097e42b5e6fb270e1ee28, type: 2}
 --- !u!4 &1458518240
 Transform:
   m_ObjectHideFlags: 0

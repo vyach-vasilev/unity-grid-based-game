@@ -22,7 +22,7 @@
     public void Update()
     {
         OnHover();
-        if (_inputManager.Deselect || _inputManager.IsNeedDeselect<UnitController>()) TryDeselect();
+        if (_inputManager.GetKeyDown(KeybindingActions.Deselect) || _inputManager.IsNeedDeselect<UnitController>()) TryDeselect();
     }
 
     private void OnHover()

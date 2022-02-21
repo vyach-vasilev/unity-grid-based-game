@@ -20,22 +20,22 @@
 
         owner.OnMoved(_inputManager.GetWorldNodePosition());
         
-        if (_inputManager.MoveAction)
+        if (_inputManager.GetKeyDown(KeybindingActions.Action))
         {
             if(AvailableMove(owner))
                 _stateMachine.ChangeState(UnitState.Moving);
         }
-        if (_inputManager.Skill1)
+        if (_inputManager.GetKeyDown(KeybindingActions.Skill1))
         {
             owner.AttackVariants = AttackVariants.SmallCross;
             _stateMachine.ChangeState(UnitState.Attack1);
         }
-        if(_inputManager.Skill2)
+        if(_inputManager.GetKeyDown(KeybindingActions.Skill2))
         {
             owner.AttackVariants = AttackVariants.Octogram;
             _stateMachine.ChangeState(UnitState.Attack2);
         }
-        if(_inputManager.Skill3)
+        if(_inputManager.GetKeyDown(KeybindingActions.Skill3))
         {
             owner.AttackVariants = AttackVariants.GiantCross;
             _stateMachine.ChangeState(UnitState.Attack3);

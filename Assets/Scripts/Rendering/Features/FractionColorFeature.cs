@@ -5,7 +5,8 @@ using UnityEngine.Rendering.Universal;
 public class FractionColorFeature: ScriptableRendererFeature
 {
     private static readonly int SurfaceId = Shader.PropertyToID("_Surface");
-
+    private InputManager _inputManager;
+    
     private FractionColorPass _pass;
     private DataProvider _dataProvider;
     private Material _friendMaterial;
@@ -37,13 +38,15 @@ public class FractionColorFeature: ScriptableRendererFeature
     
     private bool IsValid()
     {
+        _inputManager = InputManager.Instance;
+        
         return 
             _friendMaterial && 
             _enemyMaterial && 
             _dataProvider && 
             _dataProvider.Units != null &&
-            InputManager.Instance != null && 
-            InputManager.Instance.Highlight;
+            _inputManager != null && 
+            _inputManager.GetKey(KeybindingActions.Highlight);
     }
     
     public void OnEnable()
