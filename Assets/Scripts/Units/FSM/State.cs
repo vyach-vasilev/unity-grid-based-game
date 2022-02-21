@@ -2,9 +2,9 @@
 {
     Idle = 0,
     Moving = 1,
-    Attack1 = 2,
-    Attack2 = 3,
-    Attack3 = 4,
+    Attack = 2,
+    HeavyAttack = 3,
+    MagicAttack = 4,
 }
 
 public abstract class State<T, U>

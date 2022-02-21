@@ -25,20 +25,20 @@
             if(AvailableMove(owner))
                 _stateMachine.ChangeState(UnitState.Moving);
         }
-        if (_inputManager.GetKeyDown(KeybindingActions.Skill1))
+        if (_inputManager.GetKeyDown(KeybindingActions.Attack))
         {
             owner.AttackVariants = AttackVariants.SmallCross;
-            _stateMachine.ChangeState(UnitState.Attack1);
+            _stateMachine.ChangeState(UnitState.Attack);
         }
-        if(_inputManager.GetKeyDown(KeybindingActions.Skill2))
+        if(_inputManager.GetKeyDown(KeybindingActions.HeavyAttack))
         {
             owner.AttackVariants = AttackVariants.Octogram;
-            _stateMachine.ChangeState(UnitState.Attack2);
+            _stateMachine.ChangeState(UnitState.HeavyAttack);
         }
-        if(_inputManager.GetKeyDown(KeybindingActions.Skill3))
+        if(_inputManager.GetKeyDown(KeybindingActions.MagicAttack))
         {
             owner.AttackVariants = AttackVariants.GiantCross;
-            _stateMachine.ChangeState(UnitState.Attack3);
+            _stateMachine.ChangeState(UnitState.MagicAttack);
         }
     }
 

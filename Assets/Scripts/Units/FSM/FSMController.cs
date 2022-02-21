@@ -10,17 +10,17 @@ public class FSMController
 
         var idleState = new IdleState(UnitState.Idle, _stateMachine);
         var movingState = new MovingState(UnitState.Moving, _stateMachine);
-        var attackFirstState = new AttackFirstState(UnitState.Attack1, _stateMachine);
-        var attackSecondState = new AttackSecondState(UnitState.Attack2, _stateMachine);
-        var attackThirdState = new AttackThirdState(UnitState.Attack3, _stateMachine);
+        var attackState = new AttackState(UnitState.Attack, _stateMachine);
+        var heavyAttackState = new HeavyAttackState(UnitState.HeavyAttack, _stateMachine);
+        var magicAttackState = new MagicAttackState(UnitState.MagicAttack, _stateMachine);
         
         _stateMachine.Subscribe(new List<State<UnitController, UnitState>>
         {
             idleState,
             movingState,
-            attackFirstState,
-            attackSecondState,
-            attackThirdState,
+            attackState,
+            heavyAttackState,
+            magicAttackState,
         });
         
         _stateMachine.ChangeState(idleState.Id);

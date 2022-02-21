@@ -5,7 +5,7 @@
     Deselect,
     Minimap,
     Highlight,
-    Skill1,
-    Skill2,
-    Skill3,
+    Attack,
+    HeavyAttack,
+    MagicAttack,
 }
