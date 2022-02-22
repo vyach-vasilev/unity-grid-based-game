@@ -8,7 +8,7 @@ public class GridFeature: ScriptableRendererFeature
     private Material _material;
 
     [SerializeField] private MapData _mapData;
-    [SerializeField] private Color _color;
+    [SerializeField] [ColorUsage(true, true)] private Color _color;
     [SerializeField, Range(0,1)] private float _thickness = 0.95f;
     [SerializeField] private RenderPassEvent _renderPassEvent = RenderPassEvent.AfterRenderingOpaques;
     

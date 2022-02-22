@@ -17,4 +17,4 @@ MonoBehaviour:
     m_Bits: 68
   _nodeRadius: 0.5
   _size: {x: 10, y: 10}
-  _prefab: {fileID: 2978531572085247689, guid: d5da92ac38a3c1c4d809ca16c9919a6b, type: 3}
+  _prefab: {fileID: 7048190466928985169, guid: d5da92ac38a3c1c4d809ca16c9919a6b, type: 3}

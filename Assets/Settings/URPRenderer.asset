@@ -31,9 +31,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   _mapData: {fileID: 11400000, guid: e84906d7bda877e4b9514d1bcb255e2c, type: 2}
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _thickness: 0.95
-  _renderPassEvent: 300
+  _color: {r: 3.1235793, g: 2.2000864, b: 0.7219594, a: 1}
+  _thickness: 0.9
+  _renderPassEvent: 550
 --- !u!114 &-2300793928224908606
 MonoBehaviour:
   m_ObjectHideFlags: 0
