@@ -39,7 +39,10 @@ public class FractionColorPass : ScriptableRenderPass
 
                 var material = model.Type == UnitType.Friendly ? _friendMaterial : _enemyMaterial;
                 material.SetColor(BaseColorId, model.Type == UnitType.Friendly ? _friendColor : _enemyColor);
-                buffer.DrawRenderer(view.Renderer, material);            
+                foreach (var renderer in view.Renderers)
+                {
+                    buffer.DrawRenderer(renderer, material);
+                }
             }
         }
         

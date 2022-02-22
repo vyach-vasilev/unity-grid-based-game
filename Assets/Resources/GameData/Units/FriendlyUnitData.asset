@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3f7e9ce58445659512bf37f506a357, type: 3}
   m_Name: FriendlyUnitData
   m_EditorClassIdentifier: 
-  _name: Blue Mannequin
-  _unit: {fileID: 5836777707736050874, guid: 70c958fa2cb13104f8b6855d0ea47c49, type: 3}
-  _preview: {fileID: 5836777707736050874, guid: 573bec09c975d1f4fba26c8713cb3932,
+  _name: Swordman
+  _unit: {fileID: 2118370019029784275, guid: edea6689fd1ff504296a2752c065c38a, type: 3}
+  _preview: {fileID: 2118370019029784275, guid: ba1b262690699334bb2e1aea44b5f9df,
     type: 3}
   _type: 0
   _position: {x: -4.5, y: 0, z: -4.5}
+  _speed: 5

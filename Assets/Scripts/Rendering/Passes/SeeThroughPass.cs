@@ -22,16 +22,26 @@ public class SeeThoughPass: ScriptableRenderPass
         {
             foreach (var unit in _units)
             {
-                var renderer = unit.View.Renderer;
-                if(renderer == null) return;
-                buffer.DrawRenderer(renderer, _material, 0, 0);
+                var renderers = unit.View.Renderers;
+                if(renderers == null || renderers.Length <=0) return;
+
+                foreach (var renderer in renderers)
+                {
+                    if(renderer == null) return;
+                    buffer.DrawRenderer(renderer, _material, 0, 0);
+                }
             }
             
             foreach (var unit in _units)
             {
-                var renderer = unit.View.Renderer;
-                if(renderer == null) return;
-                buffer.DrawRenderer(renderer, _material, 0, 1);
+                var renderers = unit.View.Renderers;
+                if(renderers == null || renderers.Length <=0) return;
+
+                foreach (var renderer in renderers)
+                {
+                    if(renderer == null) return;
+                    buffer.DrawRenderer(renderer, _material, 0, 1);
+                }
             }
         }
         context.ExecuteCommandBuffer(buffer);

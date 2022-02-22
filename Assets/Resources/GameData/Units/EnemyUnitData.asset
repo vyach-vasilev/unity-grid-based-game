@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b3f7e9ce58445659512bf37f506a357, type: 3}
   m_Name: EnemyUnitData
   m_EditorClassIdentifier: 
-  _name: Red Mannequin
-  _unit: {fileID: 5836777707736050874, guid: 326cf15cb48365d4f90ffc0ade121cec, type: 3}
-  _preview: {fileID: 5836777707736050874, guid: a03cab069cafbe84ca6dfa01abe46b8a,
+  _name: Robber
+  _unit: {fileID: 8565099065406537280, guid: 19564e57fc3a34d428273f4442fe97ae, type: 3}
+  _preview: {fileID: 6136690954644334732, guid: ff7348804dbbc7347ab90dc9c0687677,
     type: 3}
   _type: 1
   _position: {x: 4.5, y: 0, z: 4.5}
+  _speed: 5

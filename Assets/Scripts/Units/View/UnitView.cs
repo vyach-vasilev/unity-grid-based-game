@@ -2,13 +2,13 @@
 
 public class UnitView: MonoBehaviour, IUnitView
 {
-    private Renderer _renderer;
+    private Renderer[] _renderers;
     
-    public Renderer Renderer => _renderer;
+    public Renderer[] Renderers => _renderers;
     
     private void Awake()
     {
-        _renderer = GetComponentInChildren<Renderer>();
+        _renderers = GetComponentsInChildren<Renderer>();
     }
 
     public Vector3 Position
@@ -19,6 +19,9 @@ public class UnitView: MonoBehaviour, IUnitView
     
     public void SetOutline(bool outline)
     {
-        _renderer.gameObject.layer = outline ? LayerMask.NameToLayer("Hovered") : LayerMask.NameToLayer("Unit");
+        foreach (var rend in _renderers)
+        {
+            rend.gameObject.layer = outline ? LayerMask.NameToLayer("Hovered") : LayerMask.NameToLayer("Unit");
+        }
     }
 }

@@ -23,7 +23,7 @@ public class MovingState: State<UnitController, UnitState>
         
         owner.Animator.SetBool(AnimatorIds.MovingId, true);
 
-        if (owner.View.Position.XZ() == path[^1].XZ())
+        if (Mathf.Abs((owner.View.Position.XZ() - path[^1].XZ()).magnitude) <= 0.1f)
         {
             _stateMachine.ChangeState(UnitState.Idle);
         }
